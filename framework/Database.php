@@ -8,7 +8,7 @@ class Database extends PDO
 
     private function __construct()
     {
-        $config = (new Config(__DIR__ . '/.env'))->config;
+        $config = (new Config())->config;
         $this->PDOInstance = new PDO($config['DATABASE_DRIVER'] . ':dbname='.$config['DATABASE_DBNAME'].';host='.$config['DATABASE_HOST'].';port='.$config['DATABASE_PORT'],$config['DATABASE_USER'] ,$config['DATABASE_PASSWORD']);
     }
 
