@@ -3,12 +3,14 @@
 abstract class Repository
 {
     protected Database $db;
-    protected $table;
+    protected string $table;
+    protected array $config;
 
     public function __construct()
     {
         $this->db = Database::getInstance();
         $this->table = str_replace('repository', '', strtolower(get_class($this)));
+        $this->config = (new Config())->config;
     }
 
     public function findById(int $id)

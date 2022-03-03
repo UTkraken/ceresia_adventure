@@ -4,21 +4,12 @@ class Database extends PDO
 {
     private ?PDO $PDOInstance;
 
-    private static $instance = null;
-
-    public const DEFAULT_SQL_USER = 'root';
-
-    public const DEFAULT_SQL_HOST = 'localhost';
-
-    public const DEFAULT_SQL_PASS = '';
-
-    public const DEFAULT_SQL_DTB = 'ceresia_adventure';
-
-    public const DEFAULT_SQL_PORT = 3306;
+    private static ?Database $instance = null;
 
     private function __construct()
     {
-        $this->PDOInstance = new PDO('mysql:dbname='.self::DEFAULT_SQL_DTB.';host='.self::DEFAULT_SQL_HOST .';port='. self::DEFAULT_SQL_PORT,self::DEFAULT_SQL_USER ,self::DEFAULT_SQL_PASS);
+        $config = (new Config(__DIR__ . '/.env'))->config;
+        $this->PDOInstance = new PDO($config['DATABASE_DRIVER'] . ':dbname='.$config['DATABASE_DBNAME'].';host='.$config['DATABASE_HOST'].';port='.$config['DATABASE_PORT'],$config['DATABASE_USER'] ,$config['DATABASE_PASSWORD']);
     }
 
     public static function getInstance(): ?Database
