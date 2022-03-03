@@ -3,19 +3,13 @@
 require_once 'vendor/autoload.php';
 
 spl_autoload_register(function ($class_name) {
-    $controller = 'controllers/' . $class_name . '.php';
-    $util = 'utils/' . $class_name . '.php';
-    $repository = 'repositories/' . $class_name . '.php';
-    $model = 'models/' . $class_name . '.php';
+    $classToAutoLoad = ['controllers', 'utils', 'repositories', 'models', 'framework'];
 
-    if (file_exists($controller)) {
-        require($controller);
-    } elseif (file_exists($util)) {
-        require($util);
-    } elseif (file_exists($repository)) {
-        require($repository);
-    } else {
-        require ($model);
+    foreach ($classToAutoLoad as $class_directory) {
+        $file = $class_directory . '/' . $class_name . '.php';
+        if (file_exists($file)) {
+            require($file);
+        }
     }
 });
 
