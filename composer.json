@@ -1,0 +1,13 @@
+{
+    "name": "cit/web-s4",
+    "authors": [
+        {
+            "name": "a.francisco",
+            "email": "afarthuraf@gmail.com"
+        }
+    ],
+    "require": {
+        "twig/twig": "^3.3",
+      "ext-pdo": "*"
+    }
+}
