@@ -26,6 +26,10 @@ $requests = explode('/', $request);
 $endpoint = ucfirst($requests[1]);
 $method = $requests[2] ?? null;
 
+if (empty($endpoint)) {
+    $endpoint = "accueil";
+}
+
 $controllerString = $endpoint . "Controller";
 if (!class_exists($controllerString)) {
     http_response_code(404);
