@@ -4,6 +4,7 @@ abstract class Controller
 {
     protected \Twig\Environment $twig;
     protected array $config;
+    protected string $endpoint;
 
     public function __construct()
     {
@@ -12,5 +13,7 @@ abstract class Controller
         $this->twig = new \Twig\Environment($loader);
 
         $this->config = (new Config())->config;
+
+        $this->endpoint = strtolower(str_replace('Controller', '', get_class($this)));
     }
 }

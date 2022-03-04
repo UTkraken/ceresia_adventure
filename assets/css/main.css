@@ -1,0 +1,430 @@
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #EC4258;
+    border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #fa818c;
+}
+
+#container_body {
+    display: flex;
+    height: 100vh;
+    font-family: Oxygen;
+    overflow: hidden;
+
+}
+#body_wrap {
+    width: 100%;
+    margin: 2% 3%;
+}
+
+/*Side Menu*/
+#sidebar {
+    width: 200px;
+    height: 100%;
+    background-color: #EC4258;
+    border-radius: 0 25px 25px 0;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.active {
+    border-top: solid 2px white;
+    border-bottom: solid 2px white;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.3);
+
+}
+#poulpy {
+    display: block;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 90px;
+    height: auto;
+    position: absolute;
+    top: 40px;
+}
+#nav {
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#nav a{
+    text-decoration: none;
+    margin-bottom: 15px;
+}
+.nav_button {
+    font-family: Oxygen;
+    color: white;
+    height: 20px;
+    font-size: 20px;
+    text-align: center;
+    transition: all 0.2s ease-out;
+    padding: 15px 0;
+    cursor: pointer;
+}
+
+.nav_button:hover {
+    background: rgb(255,255,255);
+    background: -moz-linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0.7206232834930848) 77%);
+    background: -webkit-linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0.7206232834930848) 77%);
+    background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0.7206232834930848) 77%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffffff",endColorstr="#ffffff",GradientType=1);
+    color: #EC4258;
+    transition: all 0.2s ease-out;
+
+}
+
+/* HEADER */
+.header_container {
+    display: flex;
+    justify-content: flex-end;
+}
+#header {
+    margin-bottom: 30px;
+}
+#search_bar {
+    position: relative;
+    width: 170px;
+    height: 30px;
+    color: #D2D2D2;
+    border-bottom: solid 1px #D2D2D2;
+}
+#search_bar input {
+    border: none;
+    height: 30px;
+}
+#search_bar svg {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    right: 5px;
+    height: 15px;
+    width: 15px;
+    fill: #D2D2D2;
+}
+#profile {
+    color: #EC4258;
+    font-weight: bold;
+    font-size: 15px;
+    display: flex;
+    align-content: center;
+    align-items: center;
+    justify-content: space-around;
+    width: 15%;
+}
+
+
+/*Hike */
+.hike {
+    width: 220px;
+    font-size: 12px;
+    font-weight: bold;
+    background-color: rgba(236, 66, 88, 0.21);
+    padding: 10px 5px;
+    border-radius: 10px;
+}
+#trail_container, #statistics_container {
+    display: flex;
+    flex-wrap: wrap;
+    height: 100%;
+    overflow: auto;
+}
+.hike {
+    margin: 0 15px 15px 0;
+}
+.hike div {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding-bottom: 15px;
+}
+#hike_search {
+    padding-bottom: 25px;
+}
+.hike_county {
+    font-size: 14px;
+}
+.hike_title svg{
+    margin-right: 10px;
+}
+.hike_duration svg{
+    margin-right: 10px;
+}
+.hike_distance svg{
+    margin-right: 10px;
+}
+.hike_rating svg{
+    margin-right: 3px;
+}
+#county_search{
+    margin-left: 20px;
+}
+
+/* History */
+#search_container {
+    display: flex;
+    justify-content: flex-start;
+}
+#create_history_form{
+    margin: 20px 0;
+}
+#create_history_date{
+    margin-left: 10px;
+}
+.option {
+    padding:0 30px 0 10px;
+    min-height:40px;
+    display:flex;
+    align-items:center;
+    background:white;
+    border-top:#EC4258 solid 1px;
+    position:absolute;
+    top:0;
+    width: 100%;
+    pointer-events:none;
+    order:2;
+    z-index:1;
+    transition:background .4s ease-in-out;
+    box-sizing:border-box;
+    overflow:hidden;
+    white-space:nowrap;
+
+}
+.option:hover {
+    background:#EC4258 !important;
+}
+#name_field {
+    padding: 8px 15px;
+}
+.select:focus .option {
+    position:relative;
+    pointer-events:all;
+}
+
+#history_container hr {
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 50%;
+}
+.history_block {
+    position: relative;
+    color: white;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    border-radius: 10px 0 0 10px;
+    height: 20px;
+    padding: 20px 0 20px 10px;
+    margin-bottom: 20px;
+    transition: background 0.4s ease-out;
+    background-size: 150% auto;
+    background-image: linear-gradient(to right, rgba(236,66,88,1) 40%, rgba(255,255,255,0) 78%);
+}
+#delete_all_button {
+    cursor: pointer;
+    background-color: #EC4258;
+    border: none;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 7px;
+}
+.history_block:hover {
+    background-position: right center; /* change the direction of the change here */
+}
+.history_block:hover .history_delete_button{
+    filter: brightness(0);
+
+}
+.hike_name {
+    padding-right: 25px;
+}
+.history_delete {
+    position: absolute;
+    right: 10%;
+}
+.history_delete_button {
+    height: 24px;
+    width: 24px;
+    transition: all 0.2s ease-out;
+}
+
+.history_delete_button:hover {
+    filter: brightness(1) drop-shadow(1px 2px 7px black) !important;
+    transition: all 0.2s ease-out;
+
+}
+/* Cerescope */
+.cerescope_block {
+    width: 150px;
+    font-size: 12px;
+    font-weight: bold;
+    background-color: rgba(236, 66, 88, 0.21);
+    padding: 10px 10px;
+    border-radius: 10px;
+    margin-right: 15px;
+    margin-bottom: 15px;
+}
+.cerescope_block div {
+    padding-bottom: 5px;
+    display: flex;
+    align-items: center;
+}
+.cerescope_block div svg{
+    padding-right: 10px;
+}
+
+#cerescope_container {
+    display: flex;
+    flex-wrap: wrap;
+    height: 100%;
+    overflow: scroll;
+
+}
+
+
+/*Achievements*/
+#achievement_container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.achievement_block {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: max-content;
+    margin-bottom: 30px;
+}
+.achievement_block svg{
+    margin-bottom: 20px;
+}
+.achievement_unlocked {
+    stroke: #EC4258;
+    fill: #EC4258;
+}
+.achievement_name {
+    width: 70%;
+    left: 0;
+    right: 0;
+    margin: auto;
+    text-align: center;
+}
+
+/*Login*/
+#login_screen {
+    background-color: #EC4258;
+    width: 100%;
+    height: 100%;
+    display: flex;
+}
+
+#login_container{
+    width: 60%;
+    left: 0;
+    right: 0;
+    margin: auto;
+    padding: 20px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    border: solid 3px white;
+    border-radius: 20px;
+}
+#poulpy_login {
+    padding-bottom: 50px;
+}
+.login_input {
+    position: relative;
+    width: 170px;
+    height: 30px;
+    color: #D2D2D2;
+    border-bottom: solid 1px #D2D2D2;
+}
+.login_input input {
+    border: none;
+    height: 30px;
+}
+.login_input svg {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    right: 5px;
+    height: 15px;
+    width: 15px;
+    fill: #D2D2D2;
+}
+
+
+/* Reset CSS */
+/* http://meyerweb.com/eric/tools/css/reset/
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+body {
+    line-height: 1;
+}
+ol, ul {
+    list-style: none;
+}
+blockquote, q {
+    quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content: '';
+    content: none;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}

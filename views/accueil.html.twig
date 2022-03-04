@@ -1,11 +1,36 @@
-<html>
+<!doctype html>
+<html lang="fr">
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    {% block title %}
+        <title>Ceresia Adventure</title>
+    {% endblock %}
 </head>
 <body>
-<p>Yoéé</p>
-{% for user in users %}
-    <p>{{ user.pseudo }} - {{ user.email }} - {{ user.password }} - {{ user.userType.name }} </p>
-{% endfor %}
+<div id="container_body">
+
+    {% include '_partials/_sidebar.html.twig' %}
+
+    <div id="body_wrap">
+        {% include '_partials/_header.html.twig' %}
+
+        {% block content %}
+
+        {% endblock %}
+        <p>Yo mec</p>
+        {% for test in tests %}
+            <p>{{ test.test }}</p>
+        {% endfor %}
+    </div>
+</div>
+
+
+
 </body>
+
 </html>
+

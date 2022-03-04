@@ -11,6 +11,7 @@ class AccueilController extends Controller
     {
         $userRepository = new UserRepository();
         $users = $userRepository->select();
-        echo $this->twig->render('accueil.html.twig', ['users' => $users]);
+        $endpoint = $this->endpoint;
+        echo $this->twig->render('accueil.html.twig', ['users' => $users, 'page' => $endpoint]);
     }
 }
