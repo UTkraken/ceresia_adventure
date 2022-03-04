@@ -6,6 +6,9 @@ abstract class Repository
     protected string $table;
     protected array $config;
 
+    /**
+     * Constructeur de la classe Repository
+     */
     public function __construct()
     {
         $this->db = Database::getInstance();
@@ -13,6 +16,11 @@ abstract class Repository
         $this->config = (new Config())->config;
     }
 
+    /**
+     * Récupère une ligne de la table correspondant à l'objet en fonction de l'id
+     * @param int $id
+     * @return array
+     */
     public function findById(int $id)
     {
         $query = $this->db->query('SELECT * from ' . $this->table . ' where testId = ' . $id);
@@ -29,11 +37,15 @@ abstract class Repository
         }
         $sql = "INSERT INTO " . $this->table;
         $this->handleDataInsert($sql, $data);
-        $query = $this->db->query($sql);
-        return $query->fetch(PDO::FETCH_ASSOC);
+        $this->db->query($sql);
+        return $this->db->lastInsertId();
     }
 
     /**
+     * Met à jour les data passer en paramètre sur la table correspondant à l'objet en fonction du paramètre where
+     * @param array $data
+     * @param array|null $where
+     * @return int
      * @throws Exception
      */
     public function update(array $data, ?array $where = [])
@@ -45,12 +57,16 @@ abstract class Repository
         $this->handleDataUpdate($sql, $data);
         $this->handleWhere($sql, $where);
         $query = $this->db->query($sql);
-        return $query->fetch(PDO::FETCH_ASSOC);
+        return $query->rowCount();
     }
 
+    /**
+     * Récupère les lignes de la table correspondant à l'objet en fonction du paramètre where
+     * @param array|null $where
+     * @return array|null
+     */
     public function select(?array $where = []): ?array
     {
-
         $sql = "SELECT * FROM " . $this->table;
         $this->handleWhere($sql, $where);
         $query = $this->db->query($sql);
