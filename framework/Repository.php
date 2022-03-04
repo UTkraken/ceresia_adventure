@@ -4,6 +4,7 @@ abstract class Repository
 {
     protected Database $db;
     protected string $table;
+    protected string $model;
     protected array $config;
 
     /**
@@ -12,7 +13,9 @@ abstract class Repository
     public function __construct()
     {
         $this->db = Database::getInstance();
-        $this->table = str_replace('repository', '', strtolower(get_class($this)));
+        $this->model = str_replace('Repository', '', get_class($this));
+        $this->table = Tool::addSToSnakeCase(Tool::camelCaseToSnakeCase($this->model));
+
         $this->config = (new Config())->config;
     }
 
@@ -23,7 +26,8 @@ abstract class Repository
      */
     public function findById(int $id)
     {
-        $query = $this->db->query('SELECT * from ' . $this->table . ' where testId = ' . $id);
+        $idColumn = Tool::camelCaseToSnakeCase($this->model) . '_id';
+        $query = $this->db->query('SELECT * from ' . $this->table . ' where ' . $idColumn . ' = ' . $id);
         return $query->fetch(PDO::FETCH_ASSOC);
     }
 
@@ -70,7 +74,12 @@ abstract class Repository
         $sql = "SELECT * FROM " . $this->table;
         $this->handleWhere($sql, $where);
         $query = $this->db->query($sql);
-        return $query->fetchAll(PDO::FETCH_ASSOC);
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        $elements = [];
+        foreach ($result as $row) {
+            $elements[] = $this->model::populate($row);
+        }
+        return $elements;
     }
 
     private function handleWhere(string &$sql, array $where = [])

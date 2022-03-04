@@ -1,12 +1,12 @@
 DROP DATABASE IF EXISTS ceresia_adventure;
-CREATE DATABASE ceresia_adventure;
+CREATE DATABASE ceresia_adventure CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 use ceresia_adventure;
 
 CREATE TABLE users_types
 (
     `user_type_id` int          NOT NULL,
-    `nom`          varchar(255) NOT NULL,
+    `name`         varchar(255) NOT NULL,
     CONSTRAINT PK_users_types PRIMARY KEY (`user_type_id`)
 );
 
@@ -80,3 +80,11 @@ CREATE TABLE indices
 );
 ALTER TABLE indices
     ADD CONSTRAINT FK_indices_enigmas FOREIGN KEY (enigma_id) REFERENCES enigmas (enigma_id);
+
+INSERT INTO users_types (user_type_id, name)
+VALUES (1, 'Joueur'),
+       (2, 'Créateur');
+
+INSERT INTO users (pseudo, email, password, user_type_id, departement)
+VALUES ('Joueur', 'test@gmail.com', 'test', 1, '83'),
+       ('Créateur', 'test@gmail.com', 'test', 2, '83');

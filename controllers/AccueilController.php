@@ -9,9 +9,8 @@ class AccueilController extends Controller
 
     public function test(): void
     {
-        $testRepository = new TestRepository();
-        $testRepository->insert(['test' => "autre test"]);
-        $tests = $testRepository->select();
-        echo $this->twig->render('accueil.html.twig', ['tests' => $tests]);
+        $userRepository = new UserRepository();
+        $users = $userRepository->select();
+        echo $this->twig->render('accueil.html.twig', ['users' => $users]);
     }
 }
