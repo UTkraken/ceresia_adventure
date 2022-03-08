@@ -6,9 +6,24 @@
 
 {% block content %}
 
+
     <div id="statistics_container">
 
-        <h1>Statistiques</h1>
+        <h1 id="pageTitle">Statistiques</h1>
+
+        <div id="statistics_blocks_container">
+            {% for statistic in statistics %}
+                <div class="statistic_block">
+                    <p class="statistic_block_title">
+                        {{ statistic[0] }}
+                    </p>
+                    <p class="statistic_block_data">
+                        {{ statistic[1] }}
+                    </p>
+                </div>
+
+            {% endfor %}
+        </div>
 
     </div>
 
