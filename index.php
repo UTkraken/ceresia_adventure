@@ -5,14 +5,18 @@ require_once 'vendor/autoload.php';
 spl_autoload_register(function ($class_name) {
     $classToAutoLoad = ['controllers', 'utils', 'repositories', 'models', 'framework'];
 
+    $file_exist = false;
+
     foreach ($classToAutoLoad as $class_directory) {
         $file = $class_directory . '/' . $class_name . '.php';
         if (file_exists($file)) {
+            $file_exist = true;
             require($file);
-        } else {
-            http_response_code(404);
-            exit;
         }
+    }
+    if (!$file_exist) {
+        http_response_code(404);
+        exit;
     }
 });
 
