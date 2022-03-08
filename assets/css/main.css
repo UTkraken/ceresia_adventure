@@ -302,7 +302,6 @@
 }
 
 /* Statistics*/
-
 #statistics_blocks_container {
     display: flex;
     justify-content: space-around;
@@ -326,6 +325,60 @@
 .statistic_block_data {
     font-size: 36px;
     font-weight: bold;
+}
+
+/* Login */
+#loginBackground {
+    width: 100%;
+    height: 100%;
+    background-color: #EC4258;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -5;
+}
+
+#formContainer {
+    height: 100%;
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+#formContainer form {
+    border: solid 2px white;
+    border-radius: 25px;
+    padding: 40px 130px;
+}
+#formImage {
+    width: 200px;
+    height: auto;
+}
+#formImage img {
+    width: 100%;
+    height: auto;
+}
+
+#login_form input{
+    background: transparent;
+    color: white;
+    border: none;
+    width: 250px;
+}
+#login_form input::placeholder {
+    color: #FFFFFF;
+}
+
+.input_logo {
+    width: 24px;
+    height: 24px;
+    margin-bottom: 5px;
+}
+.form_row {
+    border-bottom: solid 2px white;
+    border-radius: 5px;
 }
 
 /* Cerescope */
