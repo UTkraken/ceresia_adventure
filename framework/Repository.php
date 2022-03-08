@@ -107,7 +107,7 @@ abstract class Repository
             }
         }
         if (!empty($conditions)) {
-            $sql_conditions = implode(' AND', $conditions);
+            $sql_conditions = implode(' AND ', $conditions);
             $sql .= " WHERE " . $sql_conditions;
         }
     }
