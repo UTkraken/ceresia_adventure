@@ -67,12 +67,26 @@ abstract class Repository
     /**
      * Récupère les lignes de la table correspondant à l'objet en fonction du paramètre where
      * @param array|null $where
+     * @param array|null $orderColumns
+     * @param array|null $orderDirections
+     * @param string|null $limit
+     * @param string|null $offset
      * @return array|null
      */
-    public function select(?array $where = []): ?array
+    public function select(?array $where = [], ?array $orderColumns = null, ?array  $orderDirections = null, ?string $limit = null, ?string $offset = null): ?array
     {
         $sql = "SELECT * FROM " . $this->table;
         $this->handleWhere($sql, $where);
+        if (isset ($orderColumn, $orderDirection)) {
+            $this->handleOrder($sql, $orderColumns, $orderDirections);
+        }
+        if (isset($limit)) {
+            $sql .= " LIMIT " . $limit;
+        }
+        if (isset($offset)) {
+            $sql .= " OFFSET " . $offset;
+        }
+
         $query = $this->db->query($sql);
         $result = $query->fetchAll(PDO::FETCH_ASSOC);
         $elements = [];
@@ -95,6 +109,22 @@ abstract class Repository
         if (!empty($conditions)) {
             $sql_conditions = implode(' AND', $conditions);
             $sql .= " WHERE " . $sql_conditions;
+        }
+    }
+
+    private function handleOrder(string &$sql, ?array $orderColumns, ?array $orderDirections)
+    {
+        $orders = [];
+        foreach ($orderColumns as $key => $column) {
+            $direction = $orderDirections[$key] ?? "ASC";
+            if (isset ($orderDirections[$key])) {
+                $orders[] = $column . " " . $direction;
+            }
+        }
+
+        if (!empty($orders)) {
+            $sql_conditions = implode(', ', $orders);
+            $sql .= " ORDER BY " . $sql_conditions;
         }
     }
 
@@ -140,4 +170,5 @@ abstract class Repository
     {
         return $this->db->query($statement, $mode, ...$fetch_mode_args);
     }
+
 }
