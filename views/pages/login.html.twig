@@ -1,0 +1,34 @@
+{% extends "accueil.html.twig" %}
+
+    {% block title %}
+        <title>Login</title>
+    {% endblock %}
+
+{% block content %}
+
+    {% block sidebar %}{% endblock %}
+    {% block header %}{% endblock %}
+
+<div id="loginBackground"></div>
+    <div id="formContainer">
+        <div id="formImage">
+            <img src="../../assets/img/logo_with_back.png" alt="">
+        </div>
+        <form action="#" method="POST" id="login_form">
+            <div class="form_row">
+                <img src="../../assets/img/mail.png" alt="Mail" class="input_logo">
+                <input type="email" name="email" placeholder="Email" required>
+            </div>
+            <div class="form_row">
+                <img src="../../assets/img/password.png" alt="Mot de passe" class="input_logo"²>
+                <input type="password" name="password" placeholder="Mot de passe" required>
+            </div>
+            <p> Pas encore de compte ? <a href="#">Inscrivez-vous</a></p>
+            <div class="form_row">
+                <input type="submit" value="Connexion">
+            </div>
+        </form>
+    </div>
+
+
+{% endblock %}
