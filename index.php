@@ -9,6 +9,9 @@ spl_autoload_register(function ($class_name) {
         $file = $class_directory . '/' . $class_name . '.php';
         if (file_exists($file)) {
             require($file);
+        } else {
+            http_response_code(404);
+            exit;
         }
     }
 });
@@ -26,12 +29,13 @@ if (empty($endpoint)) {
 
 $controllerString = $endpoint . "Controller";
 if (!class_exists($controllerString)) {
-    http_response_code(404);
+    header("HTTP/1.0 404 Not Found");
 }
 $controller = new $controllerString();
 
 if ((!empty($method) && !method_exists($controller, $method))) {
     http_response_code(404);
+    exit;
 }
 
 if (empty($method)) {
