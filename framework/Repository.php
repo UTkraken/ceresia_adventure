@@ -1,5 +1,14 @@
 <?php
 
+namespace ceresia_adventure\framework;
+
+use ceresia_adventure\utils\Config;
+use ceresia_adventure\utils\Tool;
+use ceresia_adventure\models;
+use Exception;
+use PDO;
+use PDOStatement;
+
 abstract class Repository
 {
     protected Database $db;

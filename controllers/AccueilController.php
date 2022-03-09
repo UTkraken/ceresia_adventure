@@ -1,5 +1,9 @@
 <?php
 
+namespace ceresia_adventure\controllers;
+use ceresia_adventure\framework\Controller;
+use ceresia_adventure\repositories\UserRepository;
+
 class AccueilController extends Controller
 {
     public function index(): void

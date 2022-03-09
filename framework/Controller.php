@@ -1,5 +1,9 @@
 <?php
 
+namespace ceresia_adventure\framework;
+
+use ceresia_adventure\utils\Config;
+
 abstract class Controller
 {
     protected \Twig\Environment $twig;

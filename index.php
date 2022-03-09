@@ -1,20 +1,14 @@
 <?php
 
+namespace ceresia_adventure;
+
 require_once 'vendor/autoload.php';
 
 spl_autoload_register(function ($class_name) {
-    $classToAutoLoad = ['controllers', 'utils', 'repositories', 'models', 'framework'];
-
-    $file_exist = false;
-
-    foreach ($classToAutoLoad as $class_directory) {
-        $file = $class_directory . '/' . $class_name . '.php';
-        if (file_exists($file)) {
-            $file_exist = true;
-            require($file);
-        }
-    }
-    if (!$file_exist) {
+    $file = str_replace('ceresia_adventure\\', '', lcfirst($class_name)) . '.php';
+    if (file_exists($file)) {
+        require($file);
+    } else {
         http_response_code(404);
         exit;
     }
@@ -31,7 +25,7 @@ if (empty($endpoint)) {
     $endpoint = "accueil";
 }
 
-$controllerString = $endpoint . "Controller";
+$controllerString = "ceresia_adventure\controllers\\" . ucfirst($endpoint) . "Controller";
 if (!class_exists($controllerString)) {
     header("HTTP/1.0 404 Not Found");
 }
