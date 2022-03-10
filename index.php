@@ -16,6 +16,10 @@ spl_autoload_register(function ($class_name) {
 
 $request = $_SERVER['REQUEST_URI'];
 
+if(str_contains($request, '.')) {
+    header('Location: ' . $request);
+}
+
 $requests = explode('/', $request);
 
 $endpoint = ucfirst($requests[1]);
