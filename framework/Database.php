@@ -1,5 +1,11 @@
 <?php
 
+namespace ceresia_adventure\framework;
+
+use ceresia_adventure\utils\Config;
+use PDO;
+use PDOStatement;
+
 class Database extends PDO
 {
     private ?PDO $PDOInstance;

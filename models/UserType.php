@@ -1,5 +1,9 @@
 <?php
 
+namespace ceresia_adventure\models;
+
+use ceresia_adventure\framework\Model;
+
 class UserType extends Model
 {
     private int $user_type_id;

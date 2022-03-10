@@ -1,5 +1,7 @@
 <?php
 
+namespace ceresia_adventure\utils;
+
 class Tool
 {
     public static function camelCaseToSnakeCase(string $input): string

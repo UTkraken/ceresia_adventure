@@ -1,5 +1,10 @@
 <?php
 
+namespace ceresia_adventure\models;
+
+use ceresia_adventure\framework\Model;
+use ceresia_adventure\repositories\UserTypeRepository;
+
 class User extends Model
 {
     private int $userId;

@@ -1,6 +1,10 @@
 <?php
 declare(strict_types=1);
 
+namespace ceresia_adventure\controllers;
+
+use ceresia_adventure\framework\Controller;
+
 
 class ParcoursController extends Controller
 {
