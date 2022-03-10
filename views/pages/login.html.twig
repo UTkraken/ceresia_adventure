@@ -1,7 +1,7 @@
 {% extends "accueil.html.twig" %}
 
     {% block title %}
-        <title>Login</title>
+        <title>Connexion</title>
     {% endblock %}
 
 {% block content %}
@@ -23,10 +23,10 @@
                 <img src="../../assets/img/password.png" alt="Mot de passe" class="input_logo"²>
                 <input type="password" name="password" placeholder="Mot de passe" required>
             </div>
-            <p> Pas encore de compte ? <a href="#">Inscrivez-vous</a></p>
-            <div class="form_row">
+            <div class="form_submit ">
                 <input type="submit" value="Connexion">
             </div>
+            <p> Pas encore de compte ? <a href="inscription">Inscrivez-vous !</a></p>
         </form>
     </div>
 
