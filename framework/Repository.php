@@ -15,6 +15,7 @@ abstract class Repository
     protected string $table;
     protected string $model;
     protected array $config;
+    protected array $data;
 
     /**
      * Constructeur de la classe Repository
@@ -31,19 +32,20 @@ abstract class Repository
     /**
      * Récupère une ligne de la table correspondant à l'objet en fonction de l'id
      * @param int $id
-     * @return array
+     * @return Repository
      */
-    public function findById(int $id)
+    public function findById(int $id): Repository
     {
         $idColumn = Tool::camelCaseToSnakeCase($this->model) . '_id';
         $query = $this->db->query('SELECT * from ' . $this->table . ' where ' . $idColumn . ' = ' . $id);
-        return $query->fetch(PDO::FETCH_ASSOC);
+        $this->data = [$query->fetch(PDO::FETCH_ASSOC)];
+        return $this;
     }
 
     /**
      * @throws Exception
      */
-    public function insert(array $data)
+    public function insert(array $data): bool|string
     {
         if (empty($data)) {
             throw new Exception("Insert without data");
@@ -61,7 +63,7 @@ abstract class Repository
      * @return int
      * @throws Exception
      */
-    public function update(array $data, ?array $where = [])
+    public function update(array $data, ?array $where = []): int
     {
         if (empty($data)) {
             throw new Exception("Insert without data");
@@ -82,7 +84,7 @@ abstract class Repository
      * @param string|null $offset
      * @return array|null
      */
-    public function select(?array $where = [], ?array $orderColumns = null, ?array  $orderDirections = null, ?string $limit = null, ?string $offset = null): ?array
+    public function select(?array $where = [], ?array $orderColumns = null, ?array $orderDirections = null, ?string $limit = null, ?string $offset = null): ?Repository
     {
         $sql = "SELECT * FROM " . $this->table;
         $this->handleWhere($sql, $where);
@@ -102,7 +104,8 @@ abstract class Repository
         foreach ($result as $row) {
             $elements[] = $this->model::populate($row);
         }
-        return $elements;
+        $this->data = $elements;
+        return $this;
     }
 
     private function handleWhere(string &$sql, array $where = [])
@@ -178,6 +181,16 @@ abstract class Repository
     public function query($statement, int $mode = PDO::FETCH_ASSOC, ...$fetch_mode_args): PDOStatement
     {
         return $this->db->query($statement, $mode, ...$fetch_mode_args);
+    }
+
+    public function row(): ?Model
+    {
+        return $this->data[0] ?? null;
+    }
+
+    public function result(): array
+    {
+        return $this->data;
     }
 
 }
