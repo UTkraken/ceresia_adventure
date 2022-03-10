@@ -14,7 +14,9 @@ abstract class Repository
     protected Database $db;
     protected string $table;
     protected string $model;
+    protected string $id;
     protected array $config;
+    protected array $data;
 
     /**
      * Constructeur de la classe Repository
@@ -22,28 +24,29 @@ abstract class Repository
     public function __construct()
     {
         $this->db = Database::getInstance();
-        $this->model = str_replace('Repository', '', get_class($this));
-        $this->table = Tool::addSToSnakeCase(Tool::camelCaseToSnakeCase($this->model));
-
+        $this->model = str_replace('Repository', '', str_replace('repositories', 'models', get_class($this)));
+        $this->table = Tool::addSToSnakeCase(Tool::camelCaseToSnakeCase(str_replace('ceresia_adventure\models\\', '', $this->model)));
+        $this->id = Tool::camelCaseToSnakeCase(str_replace('ceresia_adventure\models\\', '', $this->model)) . '_id';
         $this->config = (new Config())->config;
     }
 
     /**
      * Récupère une ligne de la table correspondant à l'objet en fonction de l'id
      * @param int $id
-     * @return array
+     * @return Repository
      */
-    public function findById(int $id)
+    public function findById(int $id): Repository
     {
-        $idColumn = Tool::camelCaseToSnakeCase($this->model) . '_id';
-        $query = $this->db->query('SELECT * from ' . $this->table . ' where ' . $idColumn . ' = ' . $id);
-        return $query->fetch(PDO::FETCH_ASSOC);
+        $query = $this->db->query('SELECT * from ' . $this->table . ' where ' . $this->id . ' = ' . $id);
+        $row = $query->fetch(PDO::FETCH_ASSOC);
+        $this->data = [$this->model::populate($row)];
+        return $this;
     }
 
     /**
      * @throws Exception
      */
-    public function insert(array $data)
+    public function insert(array $data): bool|string
     {
         if (empty($data)) {
             throw new Exception("Insert without data");
@@ -61,7 +64,7 @@ abstract class Repository
      * @return int
      * @throws Exception
      */
-    public function update(array $data, ?array $where = [])
+    public function update(array $data, ?array $where = []): int
     {
         if (empty($data)) {
             throw new Exception("Insert without data");
@@ -82,7 +85,7 @@ abstract class Repository
      * @param string|null $offset
      * @return array|null
      */
-    public function select(?array $where = [], ?array $orderColumns = null, ?array  $orderDirections = null, ?string $limit = null, ?string $offset = null): ?array
+    public function select(?array $where = [], ?array $orderColumns = null, ?array $orderDirections = null, ?string $limit = null, ?string $offset = null): ?Repository
     {
         $sql = "SELECT * FROM " . $this->table;
         $this->handleWhere($sql, $where);
@@ -95,14 +98,14 @@ abstract class Repository
         if (isset($offset)) {
             $sql .= " OFFSET " . $offset;
         }
-
         $query = $this->db->query($sql);
         $result = $query->fetchAll(PDO::FETCH_ASSOC);
         $elements = [];
         foreach ($result as $row) {
             $elements[] = $this->model::populate($row);
         }
-        return $elements;
+        $this->data = $elements;
+        return $this;
     }
 
     private function handleWhere(string &$sql, array $where = [])
@@ -178,6 +181,16 @@ abstract class Repository
     public function query($statement, int $mode = PDO::FETCH_ASSOC, ...$fetch_mode_args): PDOStatement
     {
         return $this->db->query($statement, $mode, ...$fetch_mode_args);
+    }
+
+    public function row(): mixed
+    {
+        return $this->data[0] ?? null;
+    }
+
+    public function result(): array
+    {
+        return $this->data;
     }
 
 }
