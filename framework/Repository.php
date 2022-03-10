@@ -14,6 +14,7 @@ abstract class Repository
     protected Database $db;
     protected string $table;
     protected string $model;
+    protected string $id;
     protected array $config;
     protected array $data;
 
@@ -23,9 +24,9 @@ abstract class Repository
     public function __construct()
     {
         $this->db = Database::getInstance();
-        $this->model = str_replace('Repository', '', get_class($this));
-        $this->table = Tool::addSToSnakeCase(Tool::camelCaseToSnakeCase($this->model));
-
+        $this->model = str_replace('Repository', '', str_replace('repositories', 'models', get_class($this)));
+        $this->table = Tool::addSToSnakeCase(Tool::camelCaseToSnakeCase(str_replace('ceresia_adventure\models\\', '', $this->model)));
+        $this->id = Tool::camelCaseToSnakeCase(str_replace('ceresia_adventure\models\\', '', $this->model)) . '_id';
         $this->config = (new Config())->config;
     }
 
@@ -36,9 +37,9 @@ abstract class Repository
      */
     public function findById(int $id): Repository
     {
-        $idColumn = Tool::camelCaseToSnakeCase($this->model) . '_id';
-        $query = $this->db->query('SELECT * from ' . $this->table . ' where ' . $idColumn . ' = ' . $id);
-        $this->data = [$query->fetch(PDO::FETCH_ASSOC)];
+        $query = $this->db->query('SELECT * from ' . $this->table . ' where ' . $this->id . ' = ' . $id);
+        $row = $query->fetch(PDO::FETCH_ASSOC);
+        $this->data = [$this->model::populate($row)];
         return $this;
     }
 
@@ -97,7 +98,6 @@ abstract class Repository
         if (isset($offset)) {
             $sql .= " OFFSET " . $offset;
         }
-
         $query = $this->db->query($sql);
         $result = $query->fetchAll(PDO::FETCH_ASSOC);
         $elements = [];
@@ -183,7 +183,7 @@ abstract class Repository
         return $this->db->query($statement, $mode, ...$fetch_mode_args);
     }
 
-    public function row(): ?Model
+    public function row(): mixed
     {
         return $this->data[0] ?? null;
     }

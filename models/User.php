@@ -35,7 +35,8 @@ class User extends Model
     public static function populate(array $userSql): User
     {
         $userTypeRepository = new UserTypeRepository();
-        $userType = UserType::populate($userTypeRepository->findById($userSql['user_type_id']));
+
+        $userType = $userTypeRepository->findById($userSql['user_type_id'])->row();
         $user = new User($userSql['user_id'], $userSql['pseudo'], $userSql['email'], $userSql['password'], $userType, $userSql['departement']);
         return $user;
     }
