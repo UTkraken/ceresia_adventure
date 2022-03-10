@@ -1,11 +1,10 @@
 <?php
 
-//namespace ceresia_adventures\controller;
+namespace ceresia_adventure\controllers;
 
-//use ceresia_adventure\framework\Controller
+use ceresia_adventure\framework\Controller;
 
-//TODO add 'use' for imports once namespaces are implemented
-class InscriptionController extends \Controller
+class InscriptionController extends Controller
 {
     public function index(): void
     {
