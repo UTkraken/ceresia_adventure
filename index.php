@@ -20,6 +20,8 @@ if(str_contains($request, '.')) {
     header('Location: ' . $request);
 }
 
+session_start();
+
 $requests = explode('/', $request);
 
 $endpoint = ucfirst($requests[1]);

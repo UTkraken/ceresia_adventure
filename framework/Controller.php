@@ -28,5 +28,6 @@ abstract class Controller
         $class_name = str_replace('ceresia_adventure\controllers\\', '', get_class($this));
         $this->endpoint = strtolower(str_replace('Controller', '', $class_name));
         $this->twig->addGlobal('page', $this->endpoint);
+        $this->twig->addGlobal('session', $_SESSION);
     }
 }
