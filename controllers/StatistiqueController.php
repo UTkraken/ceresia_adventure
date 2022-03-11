@@ -18,7 +18,6 @@ class StatistiqueController extends Controller
           ['Note moyenne de vos parcours', 0.1],
         ];
 
-        $endpoint = $this->endpoint;
-        echo $this->twig->render('pages/statistics.html.twig', ['page' => $endpoint, 'statistics' => $statistics_test]);
+        echo $this->twig->render('pages/statistics.html.twig', ['statistics' => $statistics_test]);
     }
 }

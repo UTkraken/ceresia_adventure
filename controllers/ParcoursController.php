@@ -10,7 +10,6 @@ class ParcoursController extends Controller
 {
     public function index(): void
     {
-        $endpoint = $this->endpoint;
-        echo $this->twig->render('pages/trails.html.twig', ['page' => $endpoint]);
+        echo $this->twig->render('pages/trails.html.twig');
     }
 }
