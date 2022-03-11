@@ -380,7 +380,7 @@
 }
 
 .input_logo {
-    width: 24px;
+    width: 22px;
     height: 24px;
     margin-bottom: 5px;
     margin-right: 5px;
@@ -398,6 +398,9 @@
     margin-bottom: 25px;
     padding-bottom: 5px;
     text-align: left;
+}
+.form_row_radio p{
+    font-weight: bold;
 }
 #form_radio_container {
     display: flex;
