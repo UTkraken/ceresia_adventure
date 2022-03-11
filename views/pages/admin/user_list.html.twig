@@ -1,0 +1,51 @@
+{% extends "accueil.html.twig" %}
+
+    {% block title %}
+        <title>Utilisateurs</title>
+    {% endblock %}
+
+{% block content %}
+
+    <div id="users_container">
+
+        <h1 id="pageTitle">Utilisateurs</h1>
+
+        <table id="user_table" class="display" style="width:100%" data-users="[]">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Nom</th>
+                    <th>Mail</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+            {% for utilisateur in userList %}
+                <tr>
+                    <td>{{ utilisateur.userId }}</td>
+                    <td>{{ utilisateur.pseudo }}</td>
+                    <td>{{ utilisateur.email }}</td>
+                    <td>
+                        <a href="#"><input type="button">coucou</a>
+                        <a href="#"><input type="button">allo</a>
+                    </td>
+                </tr>
+            {% endfor %}
+
+            </tbody>>
+        </table>
+
+    </div>
+
+
+
+{% endblock %}
+
+{% block js %}
+    {{ parent() }}
+
+    {% include '_partials/_javascript_datatable.html.twig' %}
+    <script type="text/javascript" src="{{ assets("js/user_table.js") }}"></script>
+{% endblock %}
+
