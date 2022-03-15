@@ -58,7 +58,7 @@ abstract class Repository
     }
 
     /**
-     * Met à jour les data passer en paramètre sur la table correspondant à l'objet en fonction du paramètre where
+     * Met à jour les datas passées en paramètre sur la table correspondant à l'objet en fonction du paramètre where
      * @param array $data
      * @param array|null $where
      * @return int
@@ -76,6 +76,15 @@ abstract class Repository
         return $query->rowCount();
     }
 
+    /**
+     * @param int $id
+     */
+    public function delete(int $id): void
+    {
+        $sanitizedId = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
+        $sql = "DELETE FROM " . $this->table . " WHERE $this->id=" . $sanitizedId;
+        $this->db->query($sql);
+    }
     /**
      * Récupère les lignes de la table correspondant à l'objet en fonction du paramètre where
      * @param array|null $where
@@ -99,12 +108,7 @@ abstract class Repository
             $sql .= " OFFSET " . $offset;
         }
         $query = $this->db->query($sql);
-        $result = $query->fetchAll(PDO::FETCH_ASSOC);
-        $elements = [];
-        foreach ($result as $row) {
-            $elements[] = $this->model::populate($row);
-        }
-        $this->data = $elements;
+        $this->data = $query->fetchAll(PDO::FETCH_ASSOC);
         return $this;
     }
 
@@ -189,6 +193,15 @@ abstract class Repository
     }
 
     public function result(): array
+    {
+        $elements = [];
+        foreach ($this->data as $row) {
+            $elements[] = $this->model::populate($row);
+        }
+        return $elements;
+    }
+
+    public function result_array(): array
     {
         return $this->data;
     }
