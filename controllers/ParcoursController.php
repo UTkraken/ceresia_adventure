@@ -12,4 +12,9 @@ class ParcoursController extends Controller
     {
         echo $this->twig->render('pages/trails.html.twig');
     }
+
+    public function addNewTrack() : void
+    {
+        echo $this->twig->render('pages/createur/add_new_track.html.twig');
+    }
 }

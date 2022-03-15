@@ -1,0 +1,56 @@
+{% extends "accueil.html.twig" %}
+{% block css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ assets("css/createur/new_track.css") }}">
+{% endblock %}
+
+
+    {% block title %}
+        <title>Ajouter un nouveau parcours</title>
+    {% endblock %}
+
+{% block content %}
+
+    <h1 id="pageTitle">Ajouter un nouveau parcours</h1>
+    <div id="trackFormContainer">
+        <form action="" id="add_track_form">
+            <div class="form_row">
+                <div class="form_col">
+                    <input type="text" name="nom" placeholder="Nom" required>
+                </div>
+                <div class="form_col">
+                    <input type="number" name="departement" placeholder="Département" required>
+                </div>
+            </div>
+            <div class="form_row">
+                <div class="form_col">
+                    <input type="text" name="duree" placeholder="Durée" required>
+                </div>
+                <div class="form_col">
+                    <input type="text" name="niveau" placeholder="Difficulté" required>
+                </div>
+            </div class="form_row">
+            <div class="form_col_area">
+                <input type="textarea" name="description" placeholder="Description" required>
+            </div>
+            <div class="form_row_date">
+                <div>Date de début</div>
+                <div>Date de fin</div>
+            </div>
+            <div class="form_row">
+                <div class="form_col">
+                    <input type="date" name="date_debut">
+                </div>
+                <div class="form_col">
+                    <input type="date" name="date_fin">
+                </div>
+            </div>
+            <input type="submit" class="form_add_submit">
+        </form>
+    </div>
+
+{% endblock %}
+
+{% block js %}
+    {{ parent() }}
+{% endblock %}

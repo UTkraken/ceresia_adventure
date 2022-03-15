@@ -1,5 +1,11 @@
 {% extends "accueil.html.twig" %}
 
+{% block css %}
+    {{ parent() }}
+
+    {% include "_partials/_css_datatable.html.twig" %}
+{% endblock %}
+
     {% block title %}
         <title>Liste Parcours</title>
     {% endblock %}
@@ -10,15 +16,53 @@
 
        <h1 id="pageTitle">Liste des Parcours</h1>
         <div id="trail_action_container">
-            <button type="button" class="btn btn-danger btn-lg trail_create">Créer un parcours</button>
+            <a href="parcours/addNewTrack" class="btn btn-danger btn-lg trail_create">Créer un parcours</a>
+<!--            <button type="button" class="btn btn-danger btn-lg trail_create">Créer un parcours</button>-->
             <div class="form-group">
                 <input type="text" class="form-control" id="trailSearch" aria-describedby="trailSearch" placeholder="Recherche">
             </div>
         </div>
 
-
-
+        <table id="parcours_table" class="display" style="width: 100%">
+            <thead>
+                <tr>
+                    <th>Nom du parcours</th>
+                    <th>Date de Fin</th>
+                    <th>Durée estimée</th>
+                    <th>Difficuté</th>
+                    <th>Nombre d'énigmes</th>
+                    <th>Note</th>
+                    <th>Test</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for t in tracks %}
+                <tr>
+                    <td>{{ t.name }}</td>
+                    <td>{{ t.date_end }}</td>
+                    <td>{{ t.estimated_time }}</td>
+                    <td>{{ t.level }}</td>
+                    <td>{{ t.nbEnigme }}</td>
+                    <td>{{ t.rating }}</td>
+                    <td><img src="{{ assets("img/play-solid.png") }}" alt="play_logo" class="play_logo"></td>
+                    <td>
+                        <img src="{{ assets("img/mail.png") }}" alt="Mail" class="input_logo">
+                        <img src="{{ assets("img/mail.png") }}" alt="Mail" class="input_logo">
+                        <img src="{{ assets("img/mail.png") }}" alt="Mail" class="input_logo">
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
 
     </div>
 
+{% endblock %}
+
+{% block js %}
+    {{ parent() }}
+
+    {% include "_partials/_javascript_datatable.html.twig" %}
+    <script type="text/javascript" src="{{ assets("js/createur/parcours_table.js") }}"></script>
 {% endblock %}
