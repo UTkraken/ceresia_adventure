@@ -2,9 +2,10 @@
 
 namespace ceresia_adventure\controllers;
 use ceresia_adventure\framework\Controller;
+use ceresia_adventure\framework\LoggedController;
 use ceresia_adventure\repositories\UserRepository;
 
-class AccueilController extends Controller
+class AccueilController extends LoggedController
 {
     public function index(): void
     {

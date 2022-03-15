@@ -24,6 +24,7 @@ class User extends Model
      */
     public function __construct(int $userId, string $pseudo, string $email, string $password, UserType $userType, string $departement)
     {
+        parent::__construct();
         $this->userId = $userId;
         $this->pseudo = $pseudo;
         $this->email = $email;
