@@ -532,6 +532,12 @@ text:focus, input:focus {
 }
 
 
+/* Datatable */
+#user_table a {
+    text-decoration: none;
+    margin: 0 10px;
+}
+
 /* Reset CSS */
 /* http://meyerweb.com/eric/tools/css/reset/
    v2.0 | 20110126
