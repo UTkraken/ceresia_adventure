@@ -1,0 +1,1 @@
+ALTER TABLE trails ADD COLUMN supprime BOOLEAN DEFAULT false NOT NULL;

@@ -581,3 +581,7 @@ table {
     border-collapse: collapse;
     border-spacing: 0;
 }
+
+table a, table button {
+    margin-right: 10px;
+}

@@ -88,6 +88,7 @@ abstract class Repository
     public function select(?array $where = [], ?array $orderColumns = null, ?array $orderDirections = null, ?string $limit = null, ?string $offset = null): ?Repository
     {
         $sql = "SELECT * FROM " . $this->table;
+
         $this->handleWhere($sql, $where);
         if (isset ($orderColumn, $orderDirection)) {
             $this->handleOrder($sql, $orderColumns, $orderDirections);
@@ -108,14 +109,20 @@ abstract class Repository
         return $this;
     }
 
-    private function handleWhere(string &$sql, array $where = [])
+    protected function handleWhere(string &$sql, array $where = [])
     {
         $conditions = [];
         foreach ($where as $column => $value) {
-            if (gettype($value) == "string") {
-                $conditions[] = $column . " = '" . $value . "'";
-            } else {
-                $conditions[] = $column . " = " . $value;
+            if (isset($value)) {
+                if (gettype($value) == "string") {
+                    if (str_contains($value, '%')) {
+                        $conditions[] = $column . " LIKE '" . $value . "'";
+                    } else {
+                        $conditions[] = $column . " = '" . $value . "'";
+                    }
+                } else {
+                    $conditions[] = $column . " = " . $value;
+                }
             }
         }
         if (!empty($conditions)) {
@@ -124,7 +131,7 @@ abstract class Repository
         }
     }
 
-    private function handleOrder(string &$sql, ?array $orderColumns, ?array $orderDirections)
+    protected function handleOrder(string &$sql, ?array $orderColumns, ?array $orderDirections)
     {
         $orders = [];
         foreach ($orderColumns as $key => $column) {
@@ -140,7 +147,7 @@ abstract class Repository
         }
     }
 
-    private function handleDataUpdate(string &$sql, $data)
+    protected function handleDataUpdate(string &$sql, $data)
     {
         $values = [];
         foreach ($data as $column => $value) {
@@ -154,7 +161,7 @@ abstract class Repository
         $sql .= " SET " . $sql_conditions;
     }
 
-    private function handleDataInsert(string &$sql, array $data)
+    protected function handleDataInsert(string &$sql, array $data)
     {
         $columns = [];
         $values = [];

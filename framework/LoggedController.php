@@ -2,15 +2,13 @@
 
 namespace ceresia_adventure\framework;
 
+use ceresia_adventure\models\User;
 use ceresia_adventure\utils\Config;
 use ceresia_adventure\utils\Constantes;
 
 abstract class LoggedController extends Controller
 {
-    protected \Twig\Environment $twig;
-    protected array $config;
-    protected string $endpoint;
-    protected string $asset;
+    protected User $user;
 
     public function __construct()
     {
@@ -18,6 +16,7 @@ abstract class LoggedController extends Controller
         if(!$this->isLogged()) {
             header('Location: ' .  'http://' . $_SERVER['HTTP_HOST'] . '/login');
         }
+        $this->user = $_SESSION['userInfo'];
     }
 
     public function isLogged(): bool{

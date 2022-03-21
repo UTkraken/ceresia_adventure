@@ -6,6 +6,7 @@ namespace ceresia_adventure\controllers;
 
 use ceresia_adventure\framework\Controller;
 use ceresia_adventure\framework\LoggedController;
+use ceresia_adventure\repositories\TrailRepository;
 use ceresia_adventure\utils\Constantes;
 
 class StatistiqueController extends LoggedController
@@ -22,8 +23,9 @@ class StatistiqueController extends LoggedController
 
     public function index(): void
     {
+        $trailRepository = new TrailRepository();
         $statistics_test = [
-          ['Nombre de parcours créés', 5],
+          ['Nombre de parcours créés', $trailRepository->getNbTrailByCreator($this->user->getUserId())],
           ['Note moyenne de vos parcours', 0.1],
           ['Temps de jeu total sur vos parcours', '39:25'],
           ['Note moyenne de vos parcours', 0.1],

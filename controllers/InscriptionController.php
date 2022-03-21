@@ -26,7 +26,7 @@ class InscriptionController extends Controller
                 'departement' => $_REQUEST['departement']]);
             $user = $userRepository->findById($userId)->row();
             $_SESSION['userInfo'] = $user;
-            header('Location: ' . 'http://' . $_SERVER['HTTP_HOST'] . '/parcours');
+            header('Location: ' . 'http://' . $_SERVER['HTTP_HOST'] . '/parcoursCreateur');
         } else {
             echo $this->twig->render('pages/register.html.twig', ['errors'=>$error]);
         }

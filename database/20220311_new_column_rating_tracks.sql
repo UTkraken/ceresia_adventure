@@ -1,1 +1,1 @@
-ALTER TABLE tracks ADD COLUMN rating FLOAT(8)
+ALTER TABLE trails ADD COLUMN rating FLOAT(8)
