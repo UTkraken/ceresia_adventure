@@ -38,8 +38,7 @@ abstract class Repository
     public function findById(int $id): Repository
     {
         $query = $this->db->query('SELECT * from ' . $this->table . ' where ' . $this->id . ' = ' . $id);
-        $row = $query->fetch(PDO::FETCH_ASSOC);
-        $this->data = [$this->model::populate($row)];
+        $this->data = [$query->fetch(PDO::FETCH_ASSOC)];
         return $this;
     }
 
@@ -194,9 +193,12 @@ abstract class Repository
         return $this->db->query($statement, $mode, ...$fetch_mode_args);
     }
 
-    public function row(): mixed
+    public function row(): ?Model
     {
-        return $this->data[0] ?? null;
+        if (empty($this->data)) {
+            return null;
+        }
+        return $this->model::populate($this->data[0]);
     }
 
     public function result(): array

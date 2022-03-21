@@ -1,21 +1,31 @@
-var table;
+let reloadTimeId = null;
+let usersTable;
 
-$(document).ready(function() {
-    var data = $('#user_table').data('users');
+$(document).ready(function () {
+    const $userTable = $('#user-table'),
+        dataUser = $userTable.data('users'),
+        $search = $('#userSearch');
 
-    table = $('#user_table').DataTable(
+    usersTable = $userTable.DataTable(
         {
-            serverSide  : true,
-            ajax        : {
-                "url" : "utilisateurs/users",
-                "type": "POST",
+            ordering:false,
+            processing: true,
+            serverSide: true,
+            language: {
+                url: '//cdn.datatables.net/plug-ins/1.11.5/i18n/fr-FR.json'
             },
-            data: data['data'],
-            deferLoading: data['recordsFiltered'],
-            paging      : true,
-            pageLength  : 10,
-            order       : [],
-            info        : false,
+            ajax: {
+                url: "/utilisateurs/get4gridusers",
+                type: "POST",
+                data: function (d) {
+                    d.myKey = "myValue";
+                    d.name = $search.val();
+                }
+            },
+            deferLoading: dataUser['recordsFiltered'],
+            data: dataUser['data'],
+            paging: false,
+            searching: false,
             columns: [
                 { "data": "user_id" },
                 { "data": "pseudo" },
@@ -24,20 +34,29 @@ $(document).ready(function() {
             ]
         }
     );
+    $search.on('keyup', function () {
+        // Annule le timer du précédent refresh de la dataTable
+        // Pour cancel le refresh tant qu'on écrit
+        clearTimeout(reloadTimeId);
+        // Met un couldown pour le lancement du refresh de la dataTable
+        reloadTimeId = setTimeout(function () {
+            usersTable.ajax.reload();
+        }, 500); //0.5s
+    });
+});
 
-    $('#user_table').on('click', '.delete', function () {
-        var userId = $(this).data('userid');
-
-        $.ajax({
-           url : 'utilisateurs/delete',
-            method:'POST',
-            dataType: "json",
-            data : {
-               userId : userId,
-            },
-        }).always(function() {
-            console.log('Utilisateur supprimé');
-            table.ajax.reload( null, false );
-        });
+function remove($btn) {
+    $.ajax({
+        url: "/utilisateurs/remove",
+        method: 'POST',
+        dataType: 'json',
+        data: {
+            id: $btn.data('id')
+        },
+        success: function () {
+            // fix le tooltip qui reste au refresh
+            $('.tooltip').remove();
+            usersTable.ajax.reload();
+        }
     })
-} );
+}

@@ -46,7 +46,7 @@ class ParcoursCreateurController extends LoggedController
                 $actions .= Tool::addBtnDataTable('visible', 'fa-eye', 'visible', 'Rendre le parcours public', ['id' => $row->getTrailId(), 'visible' => (int)!$row->isVisible()]);
             }
             $actions .= Tool::addBtnRedirectDataTable('edit', 'fa-pencil', '/parcoursCreateur/edit?id=' . $row->getTrailId(), 'Modifier le parcours');
-            $actions .= Tool::addBtnDataTable('edit', 'fa-trash', 'remove', 'Supprimer le parcours', ['id' => $row->getTrailId()]);
+            $actions .= Tool::addBtnDataTable('remove', 'fa-trash', 'remove', 'Supprimer le parcours', ['id' => $row->getTrailId()]);
 
             $trail['actions'] = $actions;
             $trails[] = $trail;
