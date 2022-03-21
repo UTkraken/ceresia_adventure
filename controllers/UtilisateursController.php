@@ -22,7 +22,7 @@ class UtilisateursController extends LoggedController
 
     public function index(): void
     {
-        echo $this->twig->render('pages/admin/user_list.html.twig', ['userList' => $this->_get4gridUsers()]);
+        echo $this->twig->render('pages/admin/user_list.html.twig', ['userList' => $this->_get4gridUsers(null)]);
     }
 
     public function remove(): void
@@ -33,10 +33,10 @@ class UtilisateursController extends LoggedController
         echo $userRepository->update(['supprime' => 1], ['user_id' => $id]);
     }
 
-    private function _get4gridUsers(): string
+    private function _get4gridUsers(?string $pseudo): string
     {
         $userRepository = new UserRepository();
-        $result = $userRepository->select(['supprime' => 0])->result();
+        $result = $userRepository->select(['pseudo' => '%' . $pseudo . '%', 'supprime' => 0])->result();
 
         $users = [];
         foreach ($result as $row) {
@@ -56,7 +56,8 @@ class UtilisateursController extends LoggedController
 
     public function get4gridUsers(): void
     {
-        echo $this->_get4gridUsers();
+        $pseudo = $_POST['pseudo'];
+        echo $this->_get4gridUsers($pseudo);
         die;
     }
 }

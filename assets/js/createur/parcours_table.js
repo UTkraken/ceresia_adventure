@@ -18,7 +18,6 @@ $(document).ready(function () {
                 url: "/ParcoursCreateur/get4gridTrails",
                 type: "POST",
                 data: function (d) {
-                    d.myKey = "myValue";
                     d.name = $search.val();
                 }
             },

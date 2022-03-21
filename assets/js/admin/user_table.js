@@ -18,8 +18,7 @@ $(document).ready(function () {
                 url: "/utilisateurs/get4gridusers",
                 type: "POST",
                 data: function (d) {
-                    d.myKey = "myValue";
-                    d.name = $search.val();
+                    d.pseudo = $search.val();
                 }
             },
             deferLoading: dataUser['recordsFiltered'],

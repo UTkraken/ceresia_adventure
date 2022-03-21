@@ -15,7 +15,12 @@
 
     <div id="users_container">
         <h1 id="pageTitle">Utilisateurs</h1>
-
+        <div class="data-table-header">
+            <a href="utilisateurs/addNewUser" class="btn btn-danger btn-lg user_create">Créer un utilisateur</a>
+            <div class="form-group">
+                <input type="text" class="form-control" id="userSearch" aria-describedby="userSearch" placeholder="Recherche">
+            </div>
+        </div>
         <table id="user-table" class="display" style="width:100%" data-users="{{ userList }}">
             <thead>
                 <tr>

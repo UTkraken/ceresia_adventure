@@ -166,13 +166,13 @@
 #trail_create {
     max-width: 60px;
 }
-#trail_action_container {
+.data-table-header {
     display: flex;
     justify-content: space-between;
     align-content: center;
     align-items: center;
 }
-#trail_action_container .form_group {
+.data-table-header .form-group {
     margin-bottom: 0!important;
 }
 .hike {
