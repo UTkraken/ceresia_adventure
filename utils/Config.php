@@ -1,5 +1,8 @@
 <?php
 
+namespace ceresia_adventure\utils;
+
+
 class Config
 {
     public array $config = [];

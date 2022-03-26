@@ -22,7 +22,7 @@
 #container_body {
     display: flex;
     height: 100vh;
-    font-family: Oxygen;
+    font-family: Oxygen, 'sans-serif';
     overflow: hidden;
 
 }
@@ -344,42 +344,140 @@
     width: 100%;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
     text-align: center;
+    justify-content: center;
 }
 #formContainer form {
     border: solid 2px white;
     border-radius: 25px;
-    padding: 40px 130px;
+    padding: 8% 10% 2% 10%;
+    width: 50%;
+    position: relative;
 }
 #formImage {
-    width: 200px;
+    width: 135px;
     height: auto;
+    transform: translateY(-50%);
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: auto;
+    right: 0;
 }
 #formImage img {
     width: 100%;
     height: auto;
 }
 
-#login_form input{
+.form_row input{
     background: transparent;
     color: white;
     border: none;
     width: 250px;
 }
 #login_form input::placeholder {
-    color: #FFFFFF;
+    color: rgba(255,255,255,0.6);
 }
 
 .input_logo {
-    width: 24px;
+    width: 22px;
     height: 24px;
     margin-bottom: 5px;
+    margin-right: 5px;
 }
 .form_row {
     border-bottom: solid 2px white;
     border-radius: 5px;
+    margin-bottom: 25px;
+    padding-bottom: 5px;
+    display: flex;
 }
+.form_row_radio {
+    border-bottom: solid 2px white;
+    border-radius: 5px;
+    margin-bottom: 25px;
+    padding-bottom: 5px;
+    text-align: left;
+}
+.form_row_radio p{
+    font-weight: bold;
+}
+#form_radio_container {
+    display: flex;
+    color: white;
+}
+.form_row_radio label {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-right: 15px;
+}
+
+input[type="radio"] {
+    appearance: none;
+    background-color: #fff;
+    margin: 0;
+    font: inherit;
+    color: currentColor;
+    width: 1.15em;
+    height: 1.15em;
+    margin-right: 5px;
+    transition: all 0.2s ease-in-out;
+}
+input[type="radio"]:checked {
+    background-color: black;
+    outline: solid 1px rgba(255,255,255,0.6);
+    border-radius: 25px;
+}
+
+/*
+text:focus, input:focus {
+    outline: solid 1px rgba(255,255,255,0.4);
+    border-radius: 7px;
+    background-color: rgba(255,255,255,0.2);
+}
+*/
+
+#login_screen {
+    background-color: #EC4258;
+    width: 100%;
+    height: 100%;
+    display: flex;
+}
+
+#login_container{
+    width: 60%;
+    left: 0;
+    right: 0;
+    margin: auto;
+    padding: 20px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    border: solid 3px white;
+    border-radius: 20px;
+}
+#login_form a {
+    text-decoration: underline white;
+    text-underline-offset: 3px;
+    color: inherit;
+}
+
+#login_form p {
+    color: white;
+}
+
+.form_submit input{
+    border: none;
+    padding: 8px 30px;
+    border-radius: 10px;
+    font-weight: bold;
+    color: #EC4258;
+    margin-bottom: 15px;
+}
+
+
 
 /* Cerescope */
 .cerescope_block {
@@ -406,61 +504,8 @@
     flex-wrap: wrap;
     height: 100%;
     overflow: scroll;
-
 }
 
-
-/*Achievements*/
-#achievement_container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
-}
-
-.achievement_block {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: max-content;
-    margin-bottom: 30px;
-}
-.achievement_block svg{
-    margin-bottom: 20px;
-}
-.achievement_unlocked {
-    stroke: #EC4258;
-    fill: #EC4258;
-}
-.achievement_name {
-    width: 70%;
-    left: 0;
-    right: 0;
-    margin: auto;
-    text-align: center;
-}
-
-/*Login*/
-#login_screen {
-    background-color: #EC4258;
-    width: 100%;
-    height: 100%;
-    display: flex;
-}
-
-#login_container{
-    width: 60%;
-    left: 0;
-    right: 0;
-    margin: auto;
-    padding: 20px 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
-    border: solid 3px white;
-    border-radius: 20px;
-}
 #poulpy_login {
     padding-bottom: 50px;
 }
@@ -486,6 +531,12 @@
     fill: #D2D2D2;
 }
 
+
+/* Datatable */
+#user_table a {
+    text-decoration: none;
+    margin: 0 10px;
+}
 
 /* Reset CSS */
 /* http://meyerweb.com/eric/tools/css/reset/
@@ -535,4 +586,8 @@ q:before, q:after {
 table {
     border-collapse: collapse;
     border-spacing: 0;
+}
+
+table a, table button {
+    margin-right: 10px;
 }

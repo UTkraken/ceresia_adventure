@@ -1,0 +1,50 @@
+{% extends "accueil.html.twig" %}
+
+{% block css %}
+    {{ parent() }}
+
+    {% include "_partials/_css_datatable.html.twig" %}
+{% endblock %}
+
+    {% block title %}
+        <title>Liste Parcours</title>
+    {% endblock %}
+
+{% block content %}
+
+    <div id="trail_container">
+
+       <h1 id="pageTitle">Liste des Parcours</h1>
+        <div id="trail_action_container">
+            <a href="parcoursCreateur/addNewTrack" class="btn btn-danger btn-lg trail_create">Créer un parcours</a>
+<!--            <button type="button" class="btn btn-danger btn-lg trail_create">Créer un parcours</button>-->
+            <div class="form-group">
+                <input type="text" class="form-control" id="trailSearch" aria-describedby="trailSearch" placeholder="Recherche">
+            </div>
+        </div>
+
+        <table id="trail-table" class="display" style="width: 100%" data-trails="{{ data_trails }}">
+            <thead>
+                <tr>
+                    <th>Nom du parcours</th>
+                    <th>Date de Fin</th>
+                    <th>Durée estimée</th>
+                    <th>Difficuté</th>
+                    <th>Nombre d'énigmes</th>
+                    <th>Note</th>
+                    <th>Test</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+        </table>
+
+    </div>
+
+{% endblock %}
+
+{% block js %}
+    {{ parent() }}
+
+    {% include "_partials/_javascript_datatable.html.twig" %}
+    <script type="text/javascript" src="{{ assets("js/createur/parcours_table.js") }}"></script>
+{% endblock %}

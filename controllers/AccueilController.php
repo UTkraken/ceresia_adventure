@@ -1,6 +1,11 @@
 <?php
 
-class AccueilController extends Controller
+namespace ceresia_adventure\controllers;
+use ceresia_adventure\framework\Controller;
+use ceresia_adventure\framework\LoggedController;
+use ceresia_adventure\repositories\UserRepository;
+
+class AccueilController extends LoggedController
 {
     public function index(): void
     {
@@ -10,8 +15,8 @@ class AccueilController extends Controller
     public function test(): void
     {
         $userRepository = new UserRepository();
-        $users = $userRepository->select();
-        $endpoint = $this->endpoint;
-        echo $this->twig->render('accueil.html.twig', ['users' => $users, 'page' => $endpoint]);
+        $users = $userRepository->select()->row();
+
+        echo $this->twig->render('accueil.html.twig', ['users' => $users]);
     }
 }

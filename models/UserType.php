@@ -1,8 +1,12 @@
 <?php
 
+namespace ceresia_adventure\models;
+
+use ceresia_adventure\framework\Model;
+
 class UserType extends Model
 {
-    private int $user_type_id;
+    private int $userTypeId;
     private string $name;
 
     /**
@@ -11,6 +15,7 @@ class UserType extends Model
      */
     public function __construct(int $user_type_id, string $name)
     {
+        parent::__construct();
         $this->user_type_id = $user_type_id;
         $this->name = $name;
     }
