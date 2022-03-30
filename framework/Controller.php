@@ -33,10 +33,10 @@ abstract class Controller
     }
 
     public function isCreateur(): bool{
-       return isset($_SESSION['userInfo']) && $_SESSION['userInfo']->getUserType()->getUserTypeId() === Constantes::USER_TYPE_CREATEUR;
+       return isset($_SESSION['userInfo']) && $_SESSION['userInfo']->getUserType()->getUserTypeId() !== Constantes::USER_TYPE_CREATEUR;
     }
 
     public function isJoueur(): bool {
-        return isset($_SESSION['userInfo']) && $_SESSION['userInfo']->getUserType()->getUserTypeId() === Constantes::USER_TYPE_JOUEUR;
+        return isset($_SESSION['userInfo']) && $_SESSION['userInfo']->getUserType()->getUserTypeId() !== Constantes::USER_TYPE_JOUEUR;
     }
 }
