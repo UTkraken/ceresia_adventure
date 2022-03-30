@@ -85,7 +85,7 @@ abstract class Repository
         $this->db->query($sql);
     }
     /**
-     * Récupère les lignes de la table correspondant à l'objet en fonction du paramètre where
+     * Récupère les lignes de la table correspondant à l'ob jet en fonction du paramètre where
      * @param array|null $where
      * @param array|null $orderColumns
      * @param array|null $orderDirections
@@ -109,6 +109,11 @@ abstract class Repository
         }
         $query = $this->db->query($sql);
         $this->data = $query->fetchAll(PDO::FETCH_ASSOC);
+        $elements = [];
+        foreach ($this->data as $row) {
+            $elements[] = $this->model::populate($row);
+        }
+        $this->data = $elements;
         return $this;
     }
 
