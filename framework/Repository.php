@@ -109,11 +109,6 @@ abstract class Repository
         }
         $query = $this->db->query($sql);
         $this->data = $query->fetchAll(PDO::FETCH_ASSOC);
-        $elements = [];
-        foreach ($this->data as $row) {
-            $elements[] = $this->model::populate($row);
-        }
-        $this->data = $elements;
         return $this;
     }
 
