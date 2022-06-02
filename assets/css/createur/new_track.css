@@ -1,0 +1,66 @@
+#trackFormContainer {
+    height: 100%;
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-top: 10%;
+}
+
+.form_row{
+    display: flex;
+}
+
+.form_row_date{
+    display: flex;
+    margin: 0 0 0 0;
+    text-align: left;
+}
+
+.form_row_date div{
+    width: 250px;
+    color: #EC4258;
+    font-weight: bold;
+}
+
+
+.form_row_date div:last-child{
+    margin-left: 40px;
+}
+
+.form_col input{
+    background: transparent;
+    color: #EC4258;
+    border: none;
+    width: 250px;
+}
+.form_col_area input{
+    background: transparent;
+    color: #EC4258;
+    border: none;
+    width: 540px;
+}
+
+#add_track_form input::placeholder {
+    color: rgba(236, 66, 88, 0.8);
+}
+
+.form_col, .form_col_area {
+    border-bottom: solid 2px #EC4258;
+    border-radius: 5px;
+    margin-bottom: 25px;
+    padding-bottom: 5px;
+    display: flex;
+    margin-right: 40px;
+}
+
+.form_add_submit{
+    background-color: #EC4258;
+    border: none;
+    padding: 8px 30px;
+    border-radius: 10px;
+    font-weight: bold;
+    color: white;
+    margin-bottom: 15px;
+}

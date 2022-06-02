@@ -32,11 +32,7 @@ abstract class Controller
         $this->twig->addGlobal('session', $_SESSION);
     }
 
-    public function isCreateur(): bool{
-       return isset($_SESSION['userInfo']) && $_SESSION['userInfo']->getUserType()->getUserTypeId() !== Constantes::USER_TYPE_CREATEUR;
-    }
-
-    public function isJoueur(): bool {
-        return isset($_SESSION['userInfo']) && $_SESSION['userInfo']->getUserType()->getUserTypeId() !== Constantes::USER_TYPE_JOUEUR;
+    public function isLogged(): bool{
+        return isset($_SESSION['userInfo']);
     }
 }

@@ -4,45 +4,60 @@ namespace ceresia_adventure\controllers;
 
 use ceresia_adventure\framework\Controller;
 use ceresia_adventure\framework\LoggedController;
+use ceresia_adventure\repositories\TrailRepository;
 use ceresia_adventure\repositories\UserRepository;
+use ceresia_adventure\utils\Tool;
 
 class UtilisateursController extends LoggedController
 {
+
+    public function __construct()
+    {
+        parent::__construct();
+        if (!$this->isAdmin()) {
+            http_response_code(403);
+            exit;
+        }
+    }
+
     public function index(): void
     {
-        echo $this->twig->render('pages/admin/user_list.html.twig', ['userList' => $this->_get4grid_users()]);
+        echo $this->twig->render('pages/admin/user_list.html.twig', ['userList' => $this->_get4gridUsers(null)]);
     }
 
-    public function delete(): void
+    public function remove(): void
     {
-        $userId = $_REQUEST['userId'];
+        $id = $_POST['id'];
 
         $userRepository = new UserRepository();
-        $userRepository->delete($userId);
+        echo $userRepository->update(['supprime' => 1], ['user_id' => $id]);
     }
 
-    private function _get4grid_users()
+    private function _get4gridUsers(?string $pseudo): string
     {
         $userRepository = new UserRepository();
-        $userList       = $userRepository->select()->result_array();
+        $result = $userRepository->select(['pseudo' => '%' . $pseudo . '%', 'supprime' => 0])->result();
 
-        $result = [];
-        foreach($userList as $user) {
-            $data = $user;
-            $data['actions'] = '<a href="#" class="delete" data-userid="'.$user['user_id'].'"><img src="'. $this->asset . '/' . 'img/trash.png' . '") }}"></a>';
+        $users = [];
+        foreach ($result as $row) {
+            $user = [
+                'user_id' => $row->getUserId(),
+                'pseudo' => $row->getPseudo(),
+                'email' => $row->getEmail(),
+            ];
+            $user['actions'] = Tool::addBtnDataTable('edit', 'fa-pencil', 'edit', 'Modifier l\'utilisateur', ['id' => $row->getUserId()]);
+            $user['actions'] .= Tool::addBtnDataTable('remove', 'fa-trash', 'remove', 'Supprimer l\'utilisateur', ['id' => $row->getUserId()]);
 
-            $result[] = $data;
+            $users[] = $user;
         }
 
-        return json_encode(["recordsTotal"    => 57,
-                            "recordsFiltered" => 57,
-                            "data" => $result]);
-
+        return Tool::returnForDataTable($users);
     }
 
-    public function users()
+    public function get4gridUsers(): void
     {
-        echo $this->_get4grid_users();
+        $pseudo = $_POST['pseudo'];
+        echo $this->_get4gridUsers($pseudo);
         die;
     }
 }
