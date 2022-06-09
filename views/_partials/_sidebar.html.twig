@@ -7,11 +7,14 @@
                 </div>
             </a>
         {% endif %}
-        <a href="/parcoursCreateur">
-            <div class="{% if page == 'parcoursCreateur' %}active{% endif %} nav_button"><p>Liste des parcours</p></div>
-        </a>
-        <a href="/statistique">
-            <div class="{% if page == 'statistique' %}active{% endif %} nav_button"><p>Statistiques</p></div>
-        </a>
+        {% if isCreateur %}
+            <a href="/parcoursCreateur">
+                <div class="{% if page == 'parcoursCreateur' %}active{% endif %} nav_button"><p>Vos parcours</p></div>
+            </a>
+            <a href="/statistique">
+                <div class="{% if page == 'statistique' %}active{% endif %} nav_button"><p>Statistiques</p></div>
+            </a>
+        {% endif %}
+
     </div>
 </div>
