@@ -41,6 +41,17 @@ abstract class Repository
         $this->data = [$query->fetch(PDO::FETCH_ASSOC)];
         return $this;
     }
+    /**
+     * Récupère une ligne de la table correspondant à l'objet en fonction de l'id
+     * @param int $id
+     * @return Repository
+     */
+    public function findAll(): Repository
+    {
+        $query = $this->db->query('SELECT * from ' . $this->table);
+        $this->data = [$query->fetch(PDO::FETCH_ASSOC)];
+        return $this;
+    }
 
     /**
      * @throws Exception
@@ -109,9 +120,15 @@ abstract class Repository
         }
         $query = $this->db->query($sql);
         $this->data = $query->fetchAll(PDO::FETCH_ASSOC);
+
         return $this;
     }
 
+    /** Verify if 'where' conditions exist and if so, append them to the sql query
+     *
+     * @param string $sql
+     * @param array  $where
+     */
     protected function handleWhere(string &$sql, array $where = [])
     {
         $conditions = [];

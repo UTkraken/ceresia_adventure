@@ -13,7 +13,7 @@
 
     <h1 id="pageTitle">Ajouter un nouveau parcours</h1>
     <div id="trackFormContainer">
-        <form action="" id="add_track_form">
+        <form action="addTrack" method="POST"  id="add_track_form">
             <div class="form_row">
                 <div class="form_col">
                     <input type="text" name="nom" placeholder="Nom" required>
@@ -29,7 +29,7 @@
                 <div class="form_col">
                     <input type="text" name="niveau" placeholder="Difficulté" required>
                 </div>
-            </div class="form_row">
+            </div>
             <div class="form_col_area">
                 <input type="textarea" name="description" placeholder="Description" required>
             </div>
@@ -48,7 +48,6 @@
             <input type="submit" class="form_add_submit">
         </form>
     </div>
-
 {% endblock %}
 
 {% block js %}

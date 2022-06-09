@@ -27,6 +27,8 @@ abstract class Controller
         });
         $this->twig->addFunction($assets);
         $class_name = str_replace('ceresia_adventure\controllers\\', '', get_class($this));
+
+        //Get the url endpoint (enigma, utilisateurs...)
         $this->endpoint = strtolower(str_replace('Controller', '', $class_name));
         $this->twig->addGlobal('page', $this->endpoint);
         $this->twig->addGlobal('session', $_SESSION);
@@ -36,3 +38,4 @@ abstract class Controller
         return isset($_SESSION['userInfo']);
     }
 }
+
