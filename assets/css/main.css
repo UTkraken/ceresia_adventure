@@ -430,6 +430,18 @@ input[type="radio"]:checked {
     border-radius: 25px;
 }
 
+.admin-input {
+    color: black;
+}
+
+.box-admin {
+    background-color: #fda6ac !important;
+}
+
+.box-admin:checked {
+    background-color: #EC4258 !important;
+}
+
 /*
 text:focus, input:focus {
     outline: solid 1px rgba(255,255,255,0.4);
