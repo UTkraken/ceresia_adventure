@@ -53,7 +53,6 @@ function remove($btn) {
             id: $btn.data('id')
         },
         success: function () {
-            console.log("test passage");
             // fix le tooltip qui reste au refresh
             $('.tooltip').remove();
             adminsTable.ajax.reload();
