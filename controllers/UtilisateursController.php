@@ -65,6 +65,7 @@ class UtilisateursController extends LoggedController
     {
         echo $this->twig->render('pages/admin/add_new_user.html.twig');
     }
+
     public function addNewUserToDb(): void
     {
         $userId = $this->user->getUserId();
