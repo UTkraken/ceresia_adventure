@@ -3,6 +3,7 @@
 namespace ceresia_adventure\framework;
 
 use ceresia_adventure\models\User;
+use ceresia_adventure\repositories\UserRepository;
 use ceresia_adventure\utils\Config;
 use ceresia_adventure\utils\Constantes;
 
@@ -33,5 +34,19 @@ abstract class LoggedController extends Controller
 
     public function isAdmin(): bool{
         return isset($_SESSION['userInfo']) && $_SESSION['userInfo']->getUserType()->getUserTypeId() === Constantes::USER_TYPE_ADMINISTRATEUR;
+    }
+
+    protected function _insertControl(): array
+    {
+        $userRepository = new UserRepository();
+        $userVerif = $userRepository->select(['email' => $_REQUEST['email']])->row();
+        $errors = [];
+        if ($_REQUEST['password'] != $_REQUEST['password_confirm']) {
+            $errors[] = 'Les mots de passe sont différents';
+        }
+        if ($userVerif != null) {
+            $errors[] = 'l\'adresse email existe déjà';
+        }
+        return $errors;
     }
 }

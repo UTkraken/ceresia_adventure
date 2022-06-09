@@ -89,11 +89,12 @@ abstract class Repository
     /**
      * @param int $id
      */
-    public function delete(int $id): void
+    public function delete(int $id): int
     {
         $sanitizedId = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
         $sql = "DELETE FROM " . $this->table . " WHERE $this->id=" . $sanitizedId;
-        $this->db->query($sql);
+        $query = $this->db->query($sql);
+        return $query->rowCount();
     }
     /**
      * Récupère les lignes de la table correspondant à l'ob jet en fonction du paramètre where

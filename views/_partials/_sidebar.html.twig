@@ -6,6 +6,10 @@
                 <div class="{% if page == 'utilisateurs' %}active{% endif %} nav_button"><p>Liste des utilisateurs</p>
                 </div>
             </a>
+            <a href="/administrateur">
+                <div class="{% if page == 'administrateur' %}active{% endif %} nav_button"><p>Liste des administrateurs</p>
+                </div>
+            </a>
         {% endif %}
         {% if isCreateur %}
             <a href="/parcoursCreateur">
