@@ -1,5 +1,10 @@
 <?php
 
+namespace ceresia_adventure\models;
+
+use ceresia_adventure\framework\Model;
+use ceresia_adventure\repositories\UserTypeRepository;
+
 class User extends Model
 {
     private int $userId;
@@ -19,6 +24,7 @@ class User extends Model
      */
     public function __construct(int $userId, string $pseudo, string $email, string $password, UserType $userType, string $departement)
     {
+        parent::__construct();
         $this->userId = $userId;
         $this->pseudo = $pseudo;
         $this->email = $email;
@@ -30,7 +36,8 @@ class User extends Model
     public static function populate(array $userSql): User
     {
         $userTypeRepository = new UserTypeRepository();
-        $userType = UserType::populate($userTypeRepository->findById($userSql['user_type_id']));
+
+        $userType = $userTypeRepository->findById($userSql['user_type_id'])->row();
         $user = new User($userSql['user_id'], $userSql['pseudo'], $userSql['email'], $userSql['password'], $userType, $userSql['departement']);
         return $user;
     }

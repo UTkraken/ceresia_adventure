@@ -1,5 +1,9 @@
 <?php
 
+namespace ceresia_adventure\framework;
+
+use ceresia_adventure\utils\Config;
+
 abstract class Model {
 
     protected array $config;

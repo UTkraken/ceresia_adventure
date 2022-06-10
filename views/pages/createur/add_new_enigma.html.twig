@@ -1,0 +1,49 @@
+{% extends "accueil.html.twig" %}
+{% block css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ assets("css/createur/new_track.css") }}">
+{% endblock %}
+
+
+    {% block title %}
+        <title>Ajouter une nouvelle enigme</title>
+    {% endblock %}
+
+{% block content %}
+
+    <h1 id="pageTitle">Ajouter une nouvelle énigme</h1>
+    <div id="trackFormContainer">
+        <form action="addEnigma" method="POST"  id="add_track_form">
+            <div class="form_row">
+                <div class="form_col">
+                    <input type="text" name="name" placeholder="Nom" required>
+                </div>
+            </div>
+            <div class="form_row">
+                <div class="form_col">
+                    <input type="text" name="question" placeholder="Question" required>
+                </div>
+                <div class="form_col">
+                    <input type="text" name="answer" placeholder="Réponse" required>
+                </div>
+            </div>
+            <div class="form_row">
+                <div class="form_col">
+                    <input type="text" name="hint" placeholder="Indice" required>
+                </div>
+                <div class="form_col">
+                    <input type="text" name="difficulty" placeholder="Difficulté" required>
+                </div>
+                <div class="form_col">
+                    <input type="text" name="estimatedTime" placeholder="Temps estimé" required>
+                </div>
+            </div>
+            <input id="id" name="trail_id" type="hidden" value={{ trail_id }}>
+            <input type="submit" class="form_add_submit">
+        </form>
+    </div>
+{% endblock %}
+
+{% block js %}
+    {{ parent() }}
+{% endblock %}

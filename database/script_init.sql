@@ -23,9 +23,9 @@ CREATE TABLE users
 ALTER TABLE users
     ADD CONSTRAINT FK_users_users_types FOREIGN KEY (user_type_id) REFERENCES users_types (user_type_id);
 
-CREATE TABLE tracks
+CREATE TABLE trails
 (
-    `track_id`       int          NOT NULL AUTO_INCREMENT,
+    `trail_id`       int          NOT NULL AUTO_INCREMENT,
     `name`           varchar(255) NOT NULL,
     `departement`    varchar(3)   NOT NULL,
     `estimated_time` int          NOT NULL,
@@ -34,10 +34,10 @@ CREATE TABLE tracks
     `date_start`     datetime,
     `date_end`       datetime,
     `user_id`        int          NOT NULL,
-    CONSTRAINT PK_tracks PRIMARY KEY (`track_id`)
+    CONSTRAINT PK_trails PRIMARY KEY (`trail_id`)
 );
-ALTER TABLE tracks
-    ADD CONSTRAINT FK_tracks_users FOREIGN KEY (user_id) REFERENCES users (user_id);
+ALTER TABLE trails
+    ADD CONSTRAINT FK_trails_users FOREIGN KEY (user_id) REFERENCES users (user_id);
 
 CREATE TABLE enigmas
 (
@@ -48,11 +48,11 @@ CREATE TABLE enigmas
     `answer`         varchar(255) NOT NULL,
     `difficulty`     varchar(255) NOT NULL,
     `estimated_time` int          NOT NULL,
-    `track_id`       int          NOT NULL,
+    `trail_id`       int          NOT NULL,
     CONSTRAINT PK_enigmas PRIMARY KEY (`enigma_id`)
 );
 ALTER TABLE enigmas
-    ADD CONSTRAINT FK_enigmas_tracks FOREIGN KEY (track_id) REFERENCES tracks (track_id);
+    ADD CONSTRAINT FK_enigmas_trails FOREIGN KEY (trail_id) REFERENCES trails (trail_id);
 
 CREATE TABLE enigmas_answers
 (

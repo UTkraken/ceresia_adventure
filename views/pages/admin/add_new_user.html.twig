@@ -1,0 +1,64 @@
+{% extends "accueil.html.twig" %}
+{% block css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ assets("css/createur/new_track.css") }}">
+{% endblock %}
+
+
+    {% block title %}
+        <title>Ajouter un nouveau parcours</title>
+    {% endblock %}
+
+{% block content %}
+
+    <h1 id="pageTitle">Ajouter un nouvel utilisateur</h1>
+    <div id="trackFormContainer">
+        <form action="addNewUserToDB" method="POST"  id="add_new_user">
+       <div class="form_row">
+            <div class="form_col">
+                <input type="pseudo" name="pseudo" placeholder="Pseudo" required>
+            </div>
+            <div class="form_col">
+                <input type="email" name="email" placeholder="Email" required>
+            </div>
+        </div>
+        <div class="form_row">
+            <div class="form_col">
+                <input type="password" name="password" placeholder="Mot de passe" required>
+            </div>
+            <div class="form_col">
+                <input type="password" name="password_confirm" placeholder="Confirmer mot de passe" required>
+            </div>
+        </div>
+        <div class="form_row">
+            <div class="form_col">
+            <input type="number" name="departement" placeholder="Département" required>
+            </div>
+        </div>
+        <div class="form_row_radio">
+            <p>Type de compte</p>
+            <div id="form_radio_container">
+                <label class="admin-input">
+                    <input type="radio" name="user_type_id" value="2" id="creator" class="box-admin">
+                    Créateur
+                </label>
+
+                <label class="admin-input">
+                    <input type="radio" name="user_type_id" value="1" id="player" class="box-admin">
+                    Joueur
+                </label>
+
+                <label class="admin-input">
+                    <input type="radio" name="user_type_id" value="3" id="admin" class="box-admin">
+                    Administrateur
+                </label>
+            </div>
+        </div>
+            <input type="submit" class="form_add_submit">
+        </form>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script src="{{ assets("js/main.js") }}"></script>
+{% endblock %}

@@ -1,11 +1,24 @@
 <div id="sidebar">
-    <img id="poulpy" src="../../assets/img/ceresia_white.png" alt="IMAGE">
+    <img id="poulpy" src="{{ assets("img/ceresia_white.png") }}" alt="IMAGE">
     <div id="nav">
-        <a href="/parcours">
-            <div class="{% if page == 'parcours' %}active{% endif %} nav_button"><p>Liste des parcours</p></div>
-        </a>
-        <a href="/statistique">
-            <div class="{% if page == 'statistique' %}active{% endif %} nav_button"><p>Statistiques</p></div>
-        </a>
+        {% if isAdmin %}
+            <a href="/utilisateurs">
+                <div class="{% if page == 'utilisateurs' %}active{% endif %} nav_button"><p>Liste des utilisateurs</p>
+                </div>
+            </a>
+            <a href="/administrateur">
+                <div class="{% if page == 'administrateur' %}active{% endif %} nav_button"><p>Liste des administrateurs</p>
+                </div>
+            </a>
+        {% endif %}
+        {% if isCreateur %}
+            <a href="/parcoursCreateur">
+                <div class="{% if page == 'parcoursCreateur' %}active{% endif %} nav_button"><p>Vos parcours</p></div>
+            </a>
+            <a href="/statistique">
+                <div class="{% if page == 'statistique' %}active{% endif %} nav_button"><p>Statistiques</p></div>
+            </a>
+        {% endif %}
+
     </div>
 </div>

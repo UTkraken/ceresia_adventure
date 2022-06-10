@@ -1,10 +1,16 @@
 <?php
 
+namespace ceresia_adventure\framework;
+
+use ceresia_adventure\utils\Config;
+use ceresia_adventure\utils\Constantes;
+
 abstract class Controller
 {
     protected \Twig\Environment $twig;
     protected array $config;
     protected string $endpoint;
+    protected string $asset;
 
     public function __construct()
     {
@@ -14,6 +20,22 @@ abstract class Controller
 
         $this->config = (new Config())->config;
 
-        $this->endpoint = strtolower(str_replace('Controller', '', get_class($this)));
+        $this->asset = 'http://' . $_SERVER['HTTP_HOST'] . '/assets';
+
+        $assets = new \Twig\TwigFunction('assets', function (string $url) {
+            return $this->asset . DIRECTORY_SEPARATOR . $url;
+        });
+        $this->twig->addFunction($assets);
+        $class_name = str_replace('ceresia_adventure\controllers\\', '', get_class($this));
+
+        //Get the url endpoint (enigma, utilisateurs...)
+        $this->endpoint = strtolower(str_replace('Controller', '', $class_name));
+        $this->twig->addGlobal('page', $this->endpoint);
+        $this->twig->addGlobal('session', $_SESSION);
+    }
+
+    public function isLogged(): bool{
+        return isset($_SESSION['userInfo']);
     }
 }
+
