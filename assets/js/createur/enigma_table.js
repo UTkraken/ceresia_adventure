@@ -24,6 +24,8 @@ $(document).ready(function () {
             data: data_enigmas['data'],
             paging: false,
             searching: false,
+            scrollY: '500px',
+            scrollCollapse: true,
             columns: [
                 {data: "trail_id"},
                 {data: "name"},

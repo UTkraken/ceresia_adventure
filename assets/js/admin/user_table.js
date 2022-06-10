@@ -25,6 +25,8 @@ $(document).ready(function () {
             data: dataUser['data'],
             paging: false,
             searching: false,
+            scrollY: '500px',
+            scrollCollapse: true,
             columns: [
                 { "data": "user_id" },
                 { "data": "pseudo" },
