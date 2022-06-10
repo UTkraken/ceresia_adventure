@@ -25,7 +25,7 @@ class ParcoursCreateurController extends LoggedController
     private function _get4gridTrails(?string $name, ?int $userId): string
     {
         $trailRepository = new TrailRepository();
-        $result = $trailRepository->select(['supprime' => 0, 'user_id' => $userId])->result();
+        $result = $trailRepository->select(['supprime' => 0, 'user_id' => $this->user->getUserId()])->result();
         $trails = [];
 
         foreach ($result as $row) {

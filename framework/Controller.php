@@ -26,15 +26,20 @@ abstract class Controller
             return $this->asset . DIRECTORY_SEPARATOR . $url;
         });
         $this->twig->addFunction($assets);
+
+        //Get the current class used by the route
         $class_name = str_replace('ceresia_adventure\controllers\\', '', get_class($this));
 
-        //Get the url endpoint (enigma, utilisateurs...)
+        //Get the url endpoint by removing the Controller part of the string (enigma, utilisateurs...)
         $this->endpoint = strtolower(str_replace('Controller', '', $class_name));
+
+        //Store the endpoint in a global variable, to be used in the sidebar to know which page we're visiting
         $this->twig->addGlobal('page', $this->endpoint);
         $this->twig->addGlobal('session', $_SESSION);
     }
 
-    public function isLogged(): bool{
+    public function isLogged(): bool
+    {
         return isset($_SESSION['userInfo']);
     }
 }

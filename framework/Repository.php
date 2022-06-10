@@ -54,6 +54,9 @@ abstract class Repository
     }
 
     /**
+     * @param array $data
+     *
+     * @return bool|string
      * @throws Exception
      */
     public function insert(array $data): bool|string
@@ -88,11 +91,26 @@ abstract class Repository
 
     /**
      * @param int $id
+     *
+     * @return int
      */
     public function delete(int $id): int
     {
         $sanitizedId = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
         $sql = "DELETE FROM " . $this->table . " WHERE $this->id=" . $sanitizedId;
+        $query = $this->db->query($sql);
+        return $query->rowCount();
+    }
+
+    /**
+     * @param int $id
+     *
+     * @return int
+     */
+    public function deleteEnigma(int $id): int
+    {
+        $sanitizedId = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
+        $sql = "DELETE FROM enigmas WHERE enigma_id=$sanitizedId";
         $query = $this->db->query($sql);
         return $query->rowCount();
     }

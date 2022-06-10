@@ -1,0 +1,44 @@
+{% extends "accueil.html.twig" %}
+{% block css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ assets("css/createur/new_track.css") }}">
+{% endblock %}
+
+
+    {% block title %}
+        <title>Modifier utilisateur</title>
+    {% endblock %}
+
+{% block content %}
+    <h1 id="pageTitle">Modifier un utilisateur</h1>
+    <div id="trackFormContainer">
+        <form action="insertUser" method="POST"  id="edit_user_form">
+            <div class="form_row">
+
+                <p class="form_update_label"> Pseudo</p>
+                <div class="form_col">
+                    <input type="text" name="pseudo" placeholder="Pseudo" value="{{ user[0].pseudo }}" required>
+                </div>
+
+                <p class="form_update_label"> Email</p>
+                <div class="form_col">
+                    <input type="email" name="email" placeholder="Email" value="{{ user[0].email }}" required>
+                </div>
+            </div>
+
+            {% if app.request.parameter.get("user_id") is defined  %}
+                <input type="hidden" name="user_id" value={{ app.request.parameter.get("user_id") }}>
+
+            {% else %}
+                <input type="hidden" name="user_id" value={{ user_id }}>
+            {% endif %}
+
+
+            <input type="submit" class="form_add_submit">
+        </form>
+    </div>
+{% endblock %}
+
+{% block js %}
+    {{ parent() }}
+{% endblock %}
