@@ -3,8 +3,8 @@
 namespace ceresia_adventure\controllers;
 
 use ceresia_adventure\framework\Controller;
+use ceresia_adventure\models\User;
 use ceresia_adventure\repositories\UserRepository;
-use ceresia_adventure\utils\Constantes;
 
 
 class LoginController extends Controller
@@ -17,13 +17,33 @@ class LoginController extends Controller
     public function connexionForm(): void
     {
         $userRepository = new UserRepository();
-        $user = $userRepository->select(['email'=>$_REQUEST['email'],
-                                'password'=>$_REQUEST['password']])->row();
-        if ( isset($user) ) {
-            $_SESSION['userInfo'] = $user;
-            header('Location: ' .  'http://' . $_SERVER['HTTP_HOST'] . '/parcoursCreateur');
-        } else {
-            echo $this->twig->render('pages/login.html.twig', ['errorMessage'=>'Votre identifiant ou votre mot de passe est incorret !']);
+        /** @var User $user */
+        $user = $userRepository->select(['email'=>$_REQUEST['email']])->row();
+
+        if(!isset($user))
+        {
+            echo $this->twig->render('pages/login.html.twig', ['errorMessage'=>'Votre identifiant ou mot de passe est incorrect']);
+
+            exit();
         }
+
+        if($this->isPasswordCorrect($_REQUEST['password'], $user->getPassword()))
+        {
+            $_SESSION['userInfo'] = $user;
+            header('Location: ' .  'http://' . $_SERVER['HTTP_HOST'] . '/accueil');
+        } else {
+            echo $this->twig->render('pages/login.html.twig', ['errorMessage'=>'Votre identifiant ou mot de passe est incorrect']);
+        }
+    }
+
+    /** Compare the form password with the hashed password in database
+     * @param string $pass
+     * @param string $hash
+     *
+     * @return bool
+     */
+    private function isPasswordCorrect(string $pass, string $hash): bool
+    {
+        return password_verify($pass, $hash);
     }
 }
