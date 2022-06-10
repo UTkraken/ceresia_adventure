@@ -124,7 +124,7 @@ class EnigmaController extends LoggedController
         echo $enigmaRepository->update(['supprime' => 1], ['enigma_id' => $id]);
     }
 
-    private function _insertControl(): array
+    protected function _insertControl(): array
     {
         $enigmaRepository = new EnigmaRepository();
         $enigmaVerif = $enigmaRepository->select(['name' => $_REQUEST['name']])->row();

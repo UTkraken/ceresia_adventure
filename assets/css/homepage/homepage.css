@@ -87,3 +87,51 @@ h3 {
     margin-bottom: 0;
     font-weight: bold;
 }
+
+/* gameview */
+
+.game-title {
+    text-align: center;
+    color: #EC4258;
+    font-weight: bold;
+    /*white-space: nowrap;*/
+    /*max-width: 80%;*/
+    /*display: block;*/
+    /*overflow: hidden;*/
+    /*text-overflow: fade;*/
+    max-height: calc(80%*  10);
+}
+
+.game-count {
+    text-align: center;
+    color: #EC4258;
+    font-weight: lighter;
+    font-size: small;
+}
+
+.form-reponse {
+    width: 80%;
+    margin: 10%;
+    padding: 5%;
+    border: solid 2px #EC4258;
+    border-radius: 15px;
+    text-align: center;
+}
+
+.form-reponse p:first-child {
+    font-size: 1.2em;
+    color: #EC4258;
+    font-weight: bold;
+}
+
+.form-reponse p {
+    max-height: calc(80%*  10);
+}
+
+input {
+    margin-bottom: 1rem;
+    background: transparent;
+    border: none;
+    border-bottom: solid 2px #EC4258;
+    border-radius: 5px;
+}

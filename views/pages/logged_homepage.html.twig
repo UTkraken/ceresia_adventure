@@ -29,33 +29,34 @@
             <p>Adventure</p>
         </div>
 
-
-        <div class="text_container">
-            <p class="text_row">
-                Cliquer sur un parcours pour lancer la partie !
-            </p>
-        </div>
-
-        <div class="list_container">
-            <h3>Listes des parcours</h3>
-            <div class="item_container header_list">
-                <p>Nom Parcours</p>
-                <div class="item_contrainte_title">
-                    <p>Localisation</p>
-                    <p>Durée</p>
-                    <p>Note</p>
-                </div>
+        <div class="enigme_container">
+            <div class="text_container">
+                <p class="text_row">
+                    Cliquer sur un parcours pour lancer la partie !
+                </p>
             </div>
-            {% for data in data_trails %}
-                <div class="item_container" data-id="{{ data.trail_id }}">
-                    <p>{{ data.name }}</p>
-                    <div class="item_contrainte">
-                        <p>{{ data.departement }}</p>
-                        <p>{{ data.estimated_time }}</p>
-                        <p>{{ data.rating }}</p>
+
+            <div class="list_container">
+                <h3>Listes des parcours</h3>
+                <div class="item_container header_list">
+                    <p>Nom Parcours</p>
+                    <div class="item_contrainte_title">
+                        <p>Localisation</p>
+                        <p>Durée</p>
+                        <p>Note</p>
                     </div>
                 </div>
-            {% endfor %}
+                {% for data in data_trails %}
+                    <div class="item_container" data-id="{{ data.trail_id }}">
+                        <p>{{ data.name }}</p>
+                        <div class="item_contrainte">
+                            <p>{{ data.departement }}</p>
+                            <p>{{ data.estimated_time }}</p>
+                            <p>{{ data.rating }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
         </div>
 
     {% endblock %}
