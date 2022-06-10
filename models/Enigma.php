@@ -51,8 +51,6 @@ class Enigma extends Model
         $userRepository = new UserRepository();
         $enigmaRepository = new EnigmaRepository();
         $trailRepository = new TrailRepository();
-//        $nbEnigmas = $enigmaRepository->countEnigmaByEnigma($enigmaSql['trail_id']);
-        //$creator = $userRepository->findById($enigmaSql['user_id'])->row();
         $trail = $trailRepository->findById($enigmaSql['trail_id'])->row();
         $enigma = new Enigma(
             $enigmaSql['enigma_id'],
@@ -60,7 +58,7 @@ class Enigma extends Model
             $enigmaSql['image_url'],
             $enigmaSql['question'],
             $enigmaSql['answer'],
-            5,
+            $enigmaSql['difficulty'],
             $enigmaSql['estimated_time'],
             $enigmaSql['hint'],
             $trail

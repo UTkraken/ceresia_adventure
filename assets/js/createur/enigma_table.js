@@ -73,10 +73,15 @@ function remove($btn) {
         data: {
             id: $btn.data('id')
         },
-        success: function () {
+        success: function (e) {
             // fix le tooltip qui reste au refresh
             $('.tooltip').remove();
             enigmasTable.ajax.reload();
+        },
+        error: function(e) {
+            console.log("error", e)
         }
+
     })
 }
+
