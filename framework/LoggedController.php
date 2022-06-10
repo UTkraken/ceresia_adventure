@@ -15,7 +15,7 @@ abstract class LoggedController extends Controller
     {
         parent::__construct();
         if(!$this->isLogged()) {
-            header('Location: ' .  'http://' . $_SERVER['HTTP_HOST'] . '/login');
+            header('Location: ' .  'http://' . $_SERVER['HTTP_HOST'] . '/homepage');
         }
         $this->user = $_SESSION['userInfo'];
         $this->twig->addGlobal('isCreateur', $this->isCreateur());
