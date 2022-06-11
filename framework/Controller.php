@@ -42,5 +42,56 @@ abstract class Controller
     {
         return isset($_SESSION['userInfo']);
     }
+
+    /**
+     * Verify that the pseudo only contains numbers or letters
+     * @param string $pseudo
+     *
+     * @return false|int
+     */
+    protected function validatePseudo(string $pseudo): int|false
+    {
+        return preg_match('/^[\w.-]*$/', $pseudo);
+    }
+
+    /**
+     * Verify that the mail contains a valid top domain like ".com" or ".fr"
+     * @param string $email
+     *
+     * @return bool
+     */
+    protected function validateEmail(string $email):bool
+    {
+        $splitOnAt= explode('@', $email);
+        $splitAfterAt = explode('.', $splitOnAt[1]);
+
+        if($this->isTopLevelDefined($splitAfterAt))
+        {
+            return $this->isTopLevelValid($splitAfterAt);
+        }
+        return false;
+    }
+
+    /**
+     * Verify that a '.com', '.fr' or other is defined in the mail
+     * @param array $splitmail
+     *
+     * @return bool
+     */
+    protected function isTopLevelDefined(array $splitmail):bool
+    {
+        return (count($splitmail) > 1);
+    }
+
+    /**
+     * Verify that the top level is at least 2 characters long
+     * @param array $splitmail
+     *
+     * @return bool
+     */
+    protected function isTopLevelValid(array $splitmail):bool
+    {
+        return (strlen($splitmail[1]) > 1);
+    }
 }
 

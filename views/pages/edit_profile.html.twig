@@ -15,14 +15,23 @@
 
 {% block content %}
 
+    {% if errors is defined %}
+        {% for error in errors %}
+            <p>
+                {{ error }}
+            </p>
+
+        {% endfor %}
+    {% endif %}
     <h1 id="pageTitle">Modifier votre profil</h1>
     <div id="trackFormContainer">
         <form action="insertUser" method="POST"  id="edit_user_form">
             <div class="form_row">
 
-                <p class="form_update_label"> Pseudo</p>
+                <p class="form_update_label"> Pseudo </p>
+                <p class="form_update_label">(chiffres et lettres sans espace) </p>
                 <div class="form_col">
-                    <input type="text" name="pseudo" placeholder="Pseudo" value="{{ user[0].pseudo }}" required>
+                    <input type="text" name="pseudo" placeholder="Pseudo"  value="{{ user[0].pseudo }}" required>
                 </div>
             </div>
 

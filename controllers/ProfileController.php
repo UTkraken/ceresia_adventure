@@ -48,7 +48,17 @@ class ProfileController extends LoggedController
     {
         $userRepository = new UserRepository();
         $userId = $_POST['user_id'];
-        if (empty($error)) {
+        $errors = [];
+        if(!$this->validateEmail($_REQUEST['email']))
+        {
+            array_push($errors, 'Ce mail est invalide');
+        }
+
+        if($this->validatePseudo($_REQUEST['pseudo']) == 0)
+        {
+            array_push($errors, 'Nom invalide (seuls les chiffres et lettres sont autorisés');
+        }
+        if (empty($errors)) {
             $userRepository->update(
                 [
                     'pseudo' => $_REQUEST['pseudo'],
@@ -59,10 +69,9 @@ class ProfileController extends LoggedController
             );
             header('Location: ' . 'http://' . $_SERVER['HTTP_HOST'] . '/profile');
         } else {
-            echo '<div class="something">' . $error[0];
+            $result = $userRepository->select(['user_id' => $userId])->result();
+            echo $this->twig->render('pages/edit_profile.html.twig', ['user' => $result, 'user_id' =>$userId, 'errors' => $errors]);
+            exit();
         }
-
-        $result = $userRepository->select(['user_id' => $userId])->result();
-        echo $this->twig->render('pages/edit_profile.html.twig', ['user' => $result, 'user_id' =>$userId]);
     }
 }
