@@ -29,10 +29,22 @@ class LoggedHomepageController extends LoggedController
     {
         $id = $_POST['id'];
         $counter = $_POST['counter'];
-
         $enigmaRepository = new EnigmaRepository();
         $data_enigma = $enigmaRepository->select(['trail_id'=>$id])->result_array();
-        echo $this->twig->render('pages/gameview.html.twig', ['data_enigma' => $data_enigma, 'count' => count($data_enigma), 'counter' => $counter]);
+        $count = count($data_enigma);
+        for ( $i=0; $i < $counter; $i++ ) {
+            $remove = array_shift($data_enigma);
+        }
+        echo $this->twig->render('pages/gameview.html.twig', ['data_enigma' => $data_enigma, 'count' => $count, 'counter' => $counter]);
+    }
+
+    public function victory(): void
+    {
+        $id = $_POST['id'];
+
+        $trailRepository = new TrailRepository();
+        $data_trails = $trailRepository->select(["trail_id"=> $id])->result_array();
+        echo $this->twig->render('pages/victory_page.html.twig', ['data_trails' => $data_trails]);
     }
 
 }
