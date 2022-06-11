@@ -30,7 +30,7 @@ class LoginController extends Controller
         if($this->isPasswordCorrect($_REQUEST['password'], $user->getPassword()))
         {
             $_SESSION['userInfo'] = $user;
-            header('Location: ' .  'http://' . $_SERVER['HTTP_HOST'] . '/accueil');
+            header('Location: ' .  'http://' . $_SERVER['HTTP_HOST'] . '/loggedhomepage');
         } else {
             echo $this->twig->render('pages/login.html.twig', ['errorMessage'=>'Votre identifiant ou mot de passe est incorrect']);
         }
