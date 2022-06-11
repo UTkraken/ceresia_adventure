@@ -54,4 +54,14 @@ $(document).ready(function () {
             $(".erro-text").html("Mauvaise réponse !")
         }
     });
+
+    $(document).on("click", ".indice-button", function () {
+        $(".form-reponse").css("display", "none");
+        $(".modal-indice").css("display", "block");
+    });
+
+    $(document).on("click", ".close-indice", function () {
+        $(".form-reponse").css("display", "block");
+        $(".modal-indice").css("display", "none");
+    });
 });
