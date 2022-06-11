@@ -72,15 +72,16 @@ class ParcoursCreateurController extends LoggedController
         $userId = $this->user->getUserId();
         $trailRepository = new TrailRepository();
         $error = $this->_insertTrackControl();
+
         if (empty($error)) {
             $trailId = $trailRepository->insert(
                 [
-                   'name' => $_REQUEST['name'],
+                   'name' => $this->sanitizeTextInput($_REQUEST['name']),
                    'departement' => $_REQUEST['department'],
                    'estimated_time' => $_REQUEST['duration'],
                    'level' => $_REQUEST['level'],
                    'user_id' => $userId,
-                   'description' => $_REQUEST['description'],
+                   'description' => $this->sanitizeTextInput($_REQUEST['description']),
                    'date_start' => $_REQUEST['date_start'],
                    'date_end' => $_REQUEST['date_end']
                 ]
@@ -111,18 +112,20 @@ class ParcoursCreateurController extends LoggedController
 
         $userId = $this->user->getUserId();
         $result = $trailRepository->select(['trail_id' => $_POST['trail_id'], 'user_id' => $userId])->result();
-
+        $error = [];
         $trailRepository = new TrailRepository();
-        $error = $this->_insertTrackControl();
+//        $error = $this->_insertTrackControl();
+
         if (empty($error)) {
+
             $trailId = $trailRepository->update(
                 [
-                   'name' => $_REQUEST['name'],
+                   'name' => $this->sanitizeTextInput($_REQUEST['name']),
                    'departement' => $_REQUEST['department'],
                    'estimated_time' => $_REQUEST['duration'],
                    'level' => $_REQUEST['level'],
                    'user_id' => $userId,
-                   'description' => $_REQUEST['description'],
+                   'description' => $this->sanitizeTextInput($_REQUEST['description']),
                    'date_start' => $_REQUEST['date_start'],
                    'date_end' => $_REQUEST['date_end']
                 ],

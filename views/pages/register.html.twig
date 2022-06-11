@@ -26,7 +26,7 @@
             </div>
             <div class="form_row">
                 <img src="{{ assets("img/account.png") }}" alt="Pseudonyme" class="input_logo">
-                <input type="pseudo" name="pseudo" placeholder="Pseudo" required>
+                <input type="pseudo" name="pseudo" pattern="^[^<>%@!();:/$]*$" title="Les caractères spéciaux sont interdits (chiffres et lettres uniquement)" placeholder="Pseudo" required>
             </div>
             <div class="form_row">
                 <img src="{{ assets("img/mail.png") }}" alt="Mail" class="input_logo">

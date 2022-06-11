@@ -16,7 +16,7 @@
         <form action="addNewUserToDB" method="POST"  id="add_new_user">
        <div class="form_row">
             <div class="form_col">
-                <input type="pseudo" name="pseudo" placeholder="Pseudo" required>
+                <input type="pseudo" pattern="^[^<>%@!();:/$]*$" title="Les caractères spéciaux sont interdits (chiffres et lettres uniquement)" name="pseudo" placeholder="Pseudo" required>
             </div>
             <div class="form_col">
                 <input type="email" name="email" placeholder="Email" required>

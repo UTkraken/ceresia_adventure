@@ -71,6 +71,12 @@ class AdministrateurController extends LoggedController
         $userId = $this->user->getUserId();
         $result = $userRepository->select(['user_id' => $userId])->result();
 
+        $error = [];
+        if($this->validatePseudo($_REQUEST['pseudo']) == 0)
+        {
+            array_push($error, 'Nom invalide (seuls les chiffres et lettres sont autorisés)');
+        }
+
 //        $error = $this->_insertUserControl();
         if (empty($error)) {
             $user = $userRepository->update(

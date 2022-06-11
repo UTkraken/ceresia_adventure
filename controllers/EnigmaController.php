@@ -95,10 +95,10 @@ class EnigmaController extends LoggedController
         if (empty($error)) {
             $enigmaId = $enigmaRepository->insert(
                 [
-                    'name' => $_REQUEST['name'],
-                    'question' => $_REQUEST['question'],
-                    'answer' => $_REQUEST['answer'],
-                    'hint' => $_REQUEST['hint'],
+                    'name' => $this->sanitizeTextInput($_REQUEST['name']),
+                    'question' => $this->sanitizeTextInput($_REQUEST['question']),
+                    'answer' => $this->sanitizeTextInput($_REQUEST['answer']),
+                    'hint' => $this->sanitizeTextInput($_REQUEST['hint']),
                     'difficulty' => $_REQUEST['difficulty'],
                     'estimated_time' => $_REQUEST['estimatedTime'],
                     'trail_id' => $_REQUEST['trail_id'] ,
@@ -143,10 +143,10 @@ class EnigmaController extends LoggedController
         if (empty($error)) {
             $enigma = $enigmaRepository->update(
                 [
-                    'name' => $_REQUEST['name'],
-                    'question' => $_REQUEST['question'],
-                    'answer' => $_REQUEST['answer'],
-                    'hint' => $_REQUEST['hint'],
+                    'name' => $this->sanitizeTextInput($_REQUEST['name']),
+                    'question' => $this->sanitizeTextInput($_REQUEST['question']),
+                    'answer' => $this->sanitizeTextInput($_REQUEST['answer']),
+                    'hint' => $this->sanitizeTextInput($_REQUEST['hint']),
                     'difficulty' => $_REQUEST['difficulty'],
                     'estimated_time' => $_REQUEST['estimatedTime'],
                     'image_url' => "Image path"

@@ -81,11 +81,13 @@ class UtilisateursController extends LoggedController
         $userRepository = new UserRepository();
         $error = $this->_insertControl();
         if (empty($error)) {
-            $userId = $userRepository->insert(['pseudo' => $_REQUEST['pseudo'],
-                'email' => $_REQUEST['email'],
-                'password' => $_REQUEST['password'],
-                'user_type_id' => $_REQUEST['user_type_id'],
-                'departement' => $_REQUEST['departement']]);
+            $userId = $userRepository->insert(
+                [
+                    'pseudo' => $this->sanitizeTextInput($_REQUEST['pseudo']),
+                    'email' => $_REQUEST['email'],
+                    'password' => password_hash($_REQUEST['password'],PASSWORD_DEFAULT),
+                    'user_type_id' => $_REQUEST['user_type_id'],
+                    'departement' => $_REQUEST['departement']]);
             header('Location: ' . 'http://' . $_SERVER['HTTP_HOST'] . '/utilisateurs');
         } else {
             echo $this->twig->render('pages/admin/add_new_user.html.twig', ['errors'=>$error]);

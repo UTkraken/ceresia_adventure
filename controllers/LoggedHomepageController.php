@@ -8,6 +8,23 @@ use ceresia_adventure\repositories\TrailRepository;
 
 class LoggedHomepageController extends LoggedController
 {
+
+
+    public function __construct()
+    {
+        parent::__construct();
+        if ($this->isCreateur()) {
+            header('Location: ' . 'http://' . $_SERVER['HTTP_HOST'] . '/parcoursCreateur');
+
+            exit;
+        }
+        if ($this->isAdmin()) {
+            header('Location: ' . 'http://' . $_SERVER['HTTP_HOST'] . '/utilisateurs');
+
+            exit;
+        }
+    }
+
     public function index(): void
     {
         $trailRepository = new TrailRepository();

@@ -22,7 +22,7 @@ class InscriptionController extends Controller
         if (empty($errors)) {
             $userId = $userRepository->insert(
                 [
-                    'pseudo' => $_REQUEST['pseudo'],
+                    'pseudo' => $this->validatePseudo($_REQUEST['pseudo']),
                     'email' => $_REQUEST['email'],
                     'password' => password_hash($_REQUEST['password'],PASSWORD_DEFAULT),
                     'user_type_id' => $_REQUEST['user_type_id'],
@@ -31,7 +31,7 @@ class InscriptionController extends Controller
             );
             $user = $userRepository->findById($userId)->row();
             $_SESSION['userInfo'] = $user;
-            header('Location: ' . 'http://' . $_SERVER['HTTP_HOST'] . '/accueil');
+            header('Location: ' . 'http://' . $_SERVER['HTTP_HOST'] . '/login');
         } else {
             echo $this->twig->render('pages/register.html.twig', ['errors'=>$errors]);
         }

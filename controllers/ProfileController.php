@@ -56,7 +56,7 @@ class ProfileController extends LoggedController
 
         if($this->validatePseudo($_REQUEST['pseudo']) == 0)
         {
-            array_push($errors, 'Nom invalide (seuls les chiffres et lettres sont autorisés');
+            array_push($errors, 'Nom invalide (seuls les chiffres et lettres sont autorisés)');
         }
         if (empty($errors)) {
             $userRepository->update(

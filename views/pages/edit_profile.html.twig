@@ -31,7 +31,7 @@
                 <p class="form_update_label"> Pseudo </p>
                 <p class="form_update_label">(chiffres et lettres sans espace) </p>
                 <div class="form_col">
-                    <input type="text" name="pseudo" placeholder="Pseudo"  value="{{ user[0].pseudo }}" required>
+                    <input type="text" name="pseudo"  pattern="^[^<>%@!();:/$]*$" title="Les caractères spéciaux sont interdits (chiffres et lettres uniquement)" placeholder="Pseudo"  value="{{ user[0].pseudo }}" required>
                 </div>
             </div>
 
