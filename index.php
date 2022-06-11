@@ -30,6 +30,9 @@ $requests = explode('/', $request);
 $endpoint = ucfirst($requests[1]);
 $method = $requests[2] ?? null;
 
+// TODO Passer l'argument en variable $_POST pour le passer dans le contrôleur ?
+//$argument = $requests[3] ?? null;
+
 //Redirect to the homepage if the url only contains the domain
 if (empty($endpoint)) {
     $endpoint = "accueil";

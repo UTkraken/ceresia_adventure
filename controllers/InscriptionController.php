@@ -19,14 +19,18 @@ class InscriptionController extends Controller
         $error = $this->_insertControl();
 
         if (empty($error)) {
-            $userId = $userRepository->insert(['pseudo' => $_REQUEST['pseudo'],
-                'email' => $_REQUEST['email'],
-                'password' => $_REQUEST['password'],
-                'user_type_id' => $_REQUEST['user_type_id'],
-                'departement' => $_REQUEST['departement']]);
+            $userId = $userRepository->insert(
+                [
+                    'pseudo' => $_REQUEST['pseudo'],
+                    'email' => $_REQUEST['email'],
+                    'password' => password_hash($_REQUEST['password'],PASSWORD_DEFAULT),
+                    'user_type_id' => $_REQUEST['user_type_id'],
+                    'departement' => $_REQUEST['departement']
+                ]
+            );
             $user = $userRepository->findById($userId)->row();
             $_SESSION['userInfo'] = $user;
-            header('Location: ' . 'http://' . $_SERVER['HTTP_HOST'] . '/parcoursCreateur');
+            header('Location: ' . 'http://' . $_SERVER['HTTP_HOST'] . '/accueil');
         } else {
             echo $this->twig->render('pages/register.html.twig', ['errors'=>$error]);
         }

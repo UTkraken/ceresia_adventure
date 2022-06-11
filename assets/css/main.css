@@ -489,6 +489,37 @@ text:focus, input:focus {
     margin-bottom: 15px;
 }
 
+#edit_profile_form {
+    color: black;
+}
+#profile_container {
+    margin: 10% 30px;
+}
+#profile_container h2 {
+    text-align: center;
+}
+
+#profile_hr {
+    width: 65%;
+    background-color: #e97d8d;
+    height: 1px;
+    border-radius: 15px;
+}
+
+.profile_row {
+    font-size: 20px;
+    font-weight: bold;
+    border-bottom: solid 1px #EC4258;
+    margin-bottom: 3%;
+    padding: 5px;
+    color: #EC4258;
+
+}
+.profile_row p {
+    margin-left: 20px;
+    font-size: 18px;
+    font-weight: normal;
+}
 
 
 /* Cerescope */
