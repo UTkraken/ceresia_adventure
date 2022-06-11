@@ -24,6 +24,8 @@ $(document).ready(function () {
             deferLoading: data_trail['recordsFiltered'],
             data: data_trail['data'],
             paging: false,
+            scrollY: '500px',
+            scrollCollapse: true,
             searching: false,
             columns: [
                 {data: "name"},

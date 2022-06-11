@@ -25,12 +25,20 @@ class UtilisateursController extends LoggedController
         echo $this->twig->render('pages/admin/user_list.html.twig', ['userList' => $this->_get4gridUsers(null)]);
     }
 
-    public function remove(): void
+/*    public function remove(): void
     {
         $id = $_POST['id'];
 
         $userRepository = new UserRepository();
         echo $userRepository->update(['supprime' => 1], ['user_id' => $id]);
+    }*/
+
+    public function remove(): void
+    {
+        $id = $_POST['id'];
+
+        $userRepository = new UserRepository();
+        echo $userRepository->delete($id);
     }
 
     private function _get4gridUsers(?string $pseudo): string
@@ -45,11 +53,12 @@ class UtilisateursController extends LoggedController
                 'pseudo' => $row->getPseudo(),
                 'email' => $row->getEmail(),
             ];
-            $user['actions'] = Tool::addBtnDataTable('edit', 'fa-pencil', 'edit', 'Modifier l\'utilisateur', ['id' => $row->getUserId()]);
+            $user['actions'] = Tool::addBtnRedirectUserEditDataTable($row->getUserId(), 'fa-pencil', '/utilisateurs/editUser', 'Modifier l\'utilisateur');
             $user['actions'] .= Tool::addBtnDataTable('remove', 'fa-trash', 'remove', 'Supprimer l\'utilisateur', ['id' => $row->getUserId()]);
 
             $users[] = $user;
         }
+
 
         return Tool::returnForDataTable($users);
     }
@@ -84,4 +93,38 @@ class UtilisateursController extends LoggedController
 
         echo $this->twig->render('pages/admin/utilisateurs.html.twig');
     }
+
+    public function editUser(): void
+    {
+        $userRepository = new UserRepository();
+        $userId = $_POST['user_id'];
+
+        $result = $userRepository->select(['user_id' => $userId])->result();
+
+        echo $this->twig->render('pages/admin/edit_user.html.twig', ['user' => $result, 'user_id' => $_POST['user_id']]);
+    }
+
+    public function insertUser(): void
+    {
+        $userRepository = new UserRepository();
+
+        $userId = $this->user->getUserId();
+        $result = $userRepository->select(['user_id' => $userId])->result();
+
+        if (empty($error)) {
+            $user = $userRepository->update(
+                [
+                    'pseudo' => $_REQUEST['pseudo'],
+                    'email' => $_REQUEST['email'],
+                ],
+                ['user_id' => $_REQUEST['user_id']]
+            );
+            header('Location: ' . 'http://' . $_SERVER['HTTP_HOST'] . '/utilisateurs');
+        } else {
+            echo '<div class="something">' . $error[0];
+        }
+
+        echo $this->twig->render('pages/createur/edit_track.html.twig');
+    }
+
 }

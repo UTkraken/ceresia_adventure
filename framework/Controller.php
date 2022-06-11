@@ -26,16 +26,72 @@ abstract class Controller
             return $this->asset . DIRECTORY_SEPARATOR . $url;
         });
         $this->twig->addFunction($assets);
+
+        //Get the current class used by the route
         $class_name = str_replace('ceresia_adventure\controllers\\', '', get_class($this));
 
-        //Get the url endpoint (enigma, utilisateurs...)
+        //Get the url endpoint by removing the Controller part of the string (enigma, utilisateurs...)
         $this->endpoint = strtolower(str_replace('Controller', '', $class_name));
+
+        //Store the endpoint in a global variable, to be used in the sidebar to know which page we're visiting
         $this->twig->addGlobal('page', $this->endpoint);
         $this->twig->addGlobal('session', $_SESSION);
     }
 
-    public function isLogged(): bool{
+    public function isLogged(): bool
+    {
         return isset($_SESSION['userInfo']);
+    }
+
+    /**
+     * Verify that the pseudo only contains numbers or letters
+     * @param string $pseudo
+     *
+     * @return false|int
+     */
+    protected function validatePseudo(string $pseudo): int|false
+    {
+        return preg_match('/^[\w.-]*$/', $pseudo);
+    }
+
+    /**
+     * Verify that the mail contains a valid top domain like ".com" or ".fr"
+     * @param string $email
+     *
+     * @return bool
+     */
+    protected function validateEmail(string $email):bool
+    {
+        $splitOnAt= explode('@', $email);
+        $splitAfterAt = explode('.', $splitOnAt[1]);
+
+        if($this->isTopLevelDefined($splitAfterAt))
+        {
+            return $this->isTopLevelValid($splitAfterAt);
+        }
+        return false;
+    }
+
+    /**
+     * Verify that a '.com', '.fr' or other is defined in the mail
+     * @param array $splitmail
+     *
+     * @return bool
+     */
+    protected function isTopLevelDefined(array $splitmail):bool
+    {
+        return (count($splitmail) > 1);
+    }
+
+    /**
+     * Verify that the top level is at least 2 characters long
+     * @param array $splitmail
+     *
+     * @return bool
+     */
+    protected function isTopLevelValid(array $splitmail):bool
+    {
+        return (strlen($splitmail[1]) > 1);
     }
 }
 

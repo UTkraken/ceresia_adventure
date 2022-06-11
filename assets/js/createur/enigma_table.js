@@ -24,6 +24,8 @@ $(document).ready(function () {
             data: data_enigmas['data'],
             paging: false,
             searching: false,
+            scrollY: '500px',
+            scrollCollapse: true,
             columns: [
                 {data: "trail_id"},
                 {data: "name"},
@@ -73,10 +75,15 @@ function remove($btn) {
         data: {
             id: $btn.data('id')
         },
-        success: function () {
+        success: function (e) {
             // fix le tooltip qui reste au refresh
             $('.tooltip').remove();
             enigmasTable.ajax.reload();
+        },
+        error: function(e) {
+            console.log("error", e)
         }
+
     })
 }
+

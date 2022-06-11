@@ -55,10 +55,31 @@ class Tool
         return '<form action='. $url . ' method="post">
             <input id="id" name="trail_id" type="hidden" value='. $id.'>
              <button type="submit" class="btn btn-default">
-                    <div class="btn fa fa-pencil btn-danger btn-s enigma_create"> modif</div>
+                    <div class="btn fa fa-pencil btn-danger btn-s enigma_create"></div>
                 </button>
             </form>';
     }
+
+    public static function addBtnRedirectUserEditDataTable($id, $faIcon, $url, $tooltip, $class = "btn-danger"): string
+    {
+        return '<form action='. $url . ' method="post">
+            <input id="id" name="user_id" type="hidden" value='. $id.'>
+             <button type="submit" class="btn btn-default">
+                    <div class="btn fa fa-pencil btn-danger btn-s enigma_create"></div>
+                </button>
+            </form>';
+    }
+
+    public static function addBtnRedirectDataEdit($id, $name_id, $faIcon, $url, $tooltip, $class = "btn-danger"): string
+    {
+        return '<form action='. $url . ' method="post">
+            <input id="id" name=' . $name_id . ' type="hidden" value='. $id.'>
+             <button type="submit" class="btn btn-default">
+                    <div class="btn fa fa-pencil btn-danger btn-s enigma_create"></div>
+                </button>
+            </form>';
+    }
+
 
     public static function addBtnDataTable($id, $faIcon, $functionTriggered, $tooltip, $datas = [], $class = "btn-danger"): string
     {
