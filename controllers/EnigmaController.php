@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace ceresia_adventure\controllers;
 
 use ceresia_adventure\framework\LoggedController;
+use ceresia_adventure\models\Enigma;
 use ceresia_adventure\repositories\EnigmaRepository;
 use ceresia_adventure\utils\Tool;
 
@@ -26,10 +27,17 @@ class EnigmaController extends LoggedController
             $trailId = $_POST['trail_id'];
         } elseif(isset($_SESSION['trail_id']))
         {
-            $trailId = $_SESSION['trail_id'];
+            $trailId = intval($_SESSION['trail_id']);
         }
         $data_enigmas = $this->_get4gridEnigmas(intval($trailId));
         echo $this->twig->render('pages/createur/enigma.html.twig', ['data_enigmas' => $data_enigmas, 'trail_id' => $trailId]);
+    }
+
+    public function remove(): void
+    {
+        $id = $_POST['id'];
+        $enigmaRepository = new EnigmaRepository();
+        echo $enigmaRepository->deleteEnigma(intval($id));
     }
 
     /**
@@ -42,7 +50,7 @@ class EnigmaController extends LoggedController
         $enigmaRepository = new EnigmaRepository();
         $result           = $enigmaRepository->select(['trail_id' => $trailId])->result();
         $enigmas          = [];
-
+        /** @var Enigma $row */
         foreach ($result as $row) {
             $actions           = '';
             $enigma            = [
@@ -53,11 +61,12 @@ class EnigmaController extends LoggedController
                 'answer'        => $row->getAnswer(),
                 'difficulty'    => $row->getDifficulty(),
                 'estimatedTime' => $row->getEstimatedTime(),
-                'hint'          => $row->getHint(),
+                'hint'          => $row->getHint()
             ];
-//            $actions           .= Tool::addBtnRedirectDataTable('edit', 'fa-pencil', '/enigma/edit?id=' . '5', 'Modifier énigme');
-//            $actions           .= Tool::addBtnDataTable('remove', 'fa-trash', 'remove', 'Supprimer énigme', ['id' => '5']);
-            $actions .= "seomthing";
+            $_SESSION['trail_id'] = $row->getTrail()->getTrailId();
+
+            $actions .= Tool::addBtnRedirectDataEdit($row->getEnigmaId(), "enigma_id", 'fa-pencil', '/enigma/editEnigma', 'Modifier l\'énigme');
+            $actions .= Tool::addBtnDataTable('remove', 'fa-trash', 'remove', 'Supprimer l\'énigme', ['id' => $row->getEnigmaId()]);
             $enigma['actions'] = $actions;
             $enigmas[]         = $enigma;
         }
@@ -116,15 +125,43 @@ class EnigmaController extends LoggedController
         echo $enigmaRepository->update(['visible' => $visible], ['enigma_id' => $id]);
     }
 
-    public function remove(): void
+    public function editEnigma(): void
     {
-        $id = $_POST['id'];
-
         $enigmaRepository = new EnigmaRepository();
-        echo $enigmaRepository->update(['supprime' => 1], ['enigma_id' => $id]);
+        $enigmaId = $_POST['enigma_id'];
+
+        $result = $enigmaRepository->select(['enigma_id' => $enigmaId])->result();
+
+        echo $this->twig->render('pages/admin/edit_enigma.html.twig', ['enigma' => $result, 'enigma_id' =>$enigmaId]);
     }
 
-    private function _insertControl(): array
+    public function insertEnigma(): void
+    {
+        $enigmaRepository = new EnigmaRepository();
+
+
+        if (empty($error)) {
+            $enigma = $enigmaRepository->update(
+                [
+                    'name' => $_REQUEST['name'],
+                    'question' => $_REQUEST['question'],
+                    'answer' => $_REQUEST['answer'],
+                    'hint' => $_REQUEST['hint'],
+                    'difficulty' => $_REQUEST['difficulty'],
+                    'estimated_time' => $_REQUEST['estimatedTime'],
+                    'image_url' => "Image path"
+                ],
+                ['enigma_id' => $_REQUEST['enigma_id']]
+            );
+            header('Location: ' . 'http://' . $_SERVER['HTTP_HOST'] . '/enigma');
+        } else {
+            echo '<div class="something">' . $error[0];
+        }
+
+        echo $this->twig->render('pages/createur/edit_enigma.html.twig');
+    }
+
+    protected function _insertControl(): array
     {
         $enigmaRepository = new EnigmaRepository();
         $enigmaVerif = $enigmaRepository->select(['name' => $_REQUEST['name']])->row();

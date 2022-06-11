@@ -1,0 +1,65 @@
+{% extends "accueil.html.twig" %}
+{% block css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ assets("css/createur/new_track.css") }}">
+{% endblock %}
+
+
+    {% block title %}
+        <title>Modifier énigme</title>
+    {% endblock %}
+
+{% block content %}
+    <h1 id="pageTitle">Modifier une énigme</h1>
+    <div id="trackFormContainer">
+        <form action="insertEnigma" method="POST"  id="edit_user_form">
+            <div class="form_row">
+                <p class="form_update_label"> Nom</p>
+                <div class="form_col">
+                    <input type="text" name="name" placeholder="Nom" value="{{ enigma[0].name }}" required>
+                </div>
+
+                <p class="form_update_label"> Question</p>
+                <div class="form_col">
+                    <input type="text" name="question" placeholder="Question" value="{{ enigma[0].question }}" required>
+                </div>
+
+                <p class="form_update_label"> Réponse</p>
+                <div class="form_col">
+                    <input type="text" name="answer" placeholder="Réponse" value="{{ enigma[0].answer }}" required>
+                </div>
+            </div>
+
+            <div class="form_row">
+
+                <p class="form_update_label"> Indice</p>
+                <div class="form_col">
+                    <input type="text" name="hint" placeholder="Réponse" value="{{ enigma[0].hint }}" required>
+                </div>
+
+                <p class="form_update_label"> Difficulté</p>
+                <div class="form_col">
+                    <input type="text" name="difficulty" placeholder="Difficulté" value="{{ enigma[0].difficulty }}" required>
+                </div>
+
+                <p class="form_update_label"> Durée</p>
+                <div class="form_col">
+                    <input type="text" name="estimatedTime" placeholder="Temps estimé" value="{{ enigma[0].estimatedTime }}" required>
+                </div>
+
+            </div>
+            {% if app.request.parameter.get("enigma_id") is defined  %}
+                <input type="hidden" name="enigma_id" value={{ app.request.parameter.get("enigma_id") }}>
+
+            {% else %}
+                <input type="hidden" name="enigma_id" value={{ enigma_id }}>
+            {% endif %}
+
+            <input type="submit" class="form_add_submit">
+        </form>
+    </div>
+{% endblock %}
+
+{% block js %}
+    {{ parent() }}
+{% endblock %}
