@@ -17,7 +17,7 @@
 
                 <p class="form_update_label"> Nom</p>
                 <div class="form_col">
-                    <input type="text" name="name" placeholder="Nom" value="{{ track[0].name }}" required>
+                    <input type="text" name="name" pattern="^[^<>%@!();:/$]*$" placeholder="Nom" value="{{ track[0].name }}" title="Les caractères spéciaux sont interdits (chiffres et lettres uniquement)" required>
                 </div>
 
                 <p class="form_update_label"> Département</p>
@@ -29,19 +29,19 @@
 
                 <p class="form_update_label"> Durée</p>
                 <div class="form_col">
-                    <input type="text" name="duration" placeholder="Durée" value={{ track[0].estimatedTime }} required>
+                    <input type="number" name="duration" placeholder="Durée" value={{ track[0].estimatedTime }} required>
                 </div>
 
                 <p class="form_update_label"> Difficulté</p>
                 <div class="form_col">
-                    <input type="text" name="level" placeholder="Difficulté" value={{ track[0].level }} required>
+                    <input type="number" name="level" placeholder="Difficulté" value={{ track[0].level }} required>
                 </div>
 
             </div>
 
             <p class="form_update_label"> Description</p>
             <div class="form_col_area">
-                <input type="textarea" name="description" placeholder="Description" value="{{ track[0].description }}" required>
+                <input type="textarea" name="description" pattern="^[^<>%@!();:/$]*$" placeholder="Description" value="{{ track[0].description }}" title="Les caractères spéciaux sont interdits (chiffres et lettres uniquement)" required>
             </div>
 
             <div class="form_row_date">

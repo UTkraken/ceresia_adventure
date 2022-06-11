@@ -16,26 +16,26 @@
         <form action="addEnigma" method="POST"  id="add_track_form">
             <div class="form_row">
                 <div class="form_col">
-                    <input type="text" name="name" placeholder="Nom" required>
+                    <input type="text" pattern="^[^<>%@!();:/$]*$" title="Les caractères spéciaux sont interdits (chiffres et lettres uniquement)" name="name" placeholder="Nom" required>
                 </div>
             </div>
             <div class="form_row">
                 <div class="form_col">
-                    <input type="text" name="question" placeholder="Question" required>
+                    <input type="text" pattern="^[^<>%@!();:/$]*$" title="Les caractères spéciaux sont interdits (chiffres et lettres uniquement)" name="question" placeholder="Question" required>
                 </div>
                 <div class="form_col">
-                    <input type="text" name="answer" placeholder="Réponse" required>
+                    <input type="text" pattern="^[^<>%@!();:/$]*$" title="Les caractères spéciaux sont interdits (chiffres et lettres uniquement)" name="answer" placeholder="Réponse" required>
                 </div>
             </div>
             <div class="form_row">
                 <div class="form_col">
-                    <input type="text" name="hint" placeholder="Indice" required>
+                    <input type="text" pattern="^[^<>%@!();:/$]*$" title="Les caractères spéciaux sont interdits (chiffres et lettres uniquement)" name="hint" placeholder="Indice" required>
                 </div>
                 <div class="form_col">
                     <input type="text" name="difficulty" placeholder="Difficulté" required>
                 </div>
                 <div class="form_col">
-                    <input type="text" name="estimatedTime" placeholder="Temps estimé" required>
+                    <input type="text" pattern="^[^<>%@!();:/$]*$" title="Les caractères spéciaux sont interdits (chiffres et lettres uniquement)" name="estimatedTime" placeholder="Temps estimé" required>
                 </div>
             </div>
             <input id="id" name="trail_id" type="hidden" value={{ trail_id }}>

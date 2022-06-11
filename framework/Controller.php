@@ -12,6 +12,9 @@ abstract class Controller
     protected string $endpoint;
     protected string $asset;
 
+    const _FORBIDDEN_CHARACTERS = array("@", "#", "(", ")", "*", "/", ":", "$", "*", ",", "&", '!', '`');
+
+
     public function __construct()
     {
         $loader = new \Twig\Loader\FilesystemLoader('views');
@@ -92,6 +95,18 @@ abstract class Controller
     protected function isTopLevelValid(array $splitmail):bool
     {
         return (strlen($splitmail[1]) > 1);
+    }
+
+    /**
+     * Remove special characters from the input, then sanitize any html element present
+     * @param string $text
+     *
+     * @return string
+     */
+    protected function sanitizeTextInput(string $text): string
+    {
+        $cleanedString = str_replace(self::_FORBIDDEN_CHARACTERS, "", $text);
+        return filter_var($cleanedString,FILTER_SANITIZE_STRING);
     }
 }
 
