@@ -161,7 +161,6 @@ class EnigmaController extends LoggedController
         echo $this->twig->render('pages/createur/edit_enigma.html.twig');
     }
 
-
     protected function _insertControl(): array
     {
         $enigmaRepository = new EnigmaRepository();

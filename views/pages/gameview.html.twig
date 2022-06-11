@@ -1,0 +1,11 @@
+<div>
+    <h3 class="game-title">{{ data_enigma[0].name }}</h3>
+    <p class="game-count" data-count="{{ count }}">Enigme {{ counter + 1}} / {{ count }}</p>
+    <div class="form-reponse">
+        <p>Question</p>
+        <p>{{ data_enigma[0].question }}</p>
+        <input class="reponse_container" type="text" required placeholder="Rentrer votre réponse ici"/>
+        <p class="erro-text"></p>
+        <div class="button_validator" style="background: #fa818c" data-reponse="{{ data_enigma[0].answer }}">Valider la réponse</div>
+    </div>
+</div>
