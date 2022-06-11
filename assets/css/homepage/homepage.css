@@ -135,3 +135,31 @@ input {
     border-bottom: solid 2px #EC4258;
     border-radius: 5px;
 }
+
+.indice-button, .button_validator, .close-indice{
+    cursor: pointer;
+    background-color: #EC4258;
+    border: none;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 7px;
+    width: 90%;
+    margin-left: 5%;
+    margin-bottom: 5%;
+}
+
+.modal-indice {
+    display: none;
+    width: 80%;
+    margin: 10%;
+    padding: 5%;
+    border: solid 2px #EC4258;
+    border-radius: 15px;
+    text-align: center;
+}
+
+.modal-indice p:first-child {
+    font-size: 1.2em;
+    color: #EC4258;
+    font-weight: bold;
+}
