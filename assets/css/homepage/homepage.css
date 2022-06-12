@@ -2,6 +2,7 @@
     display: flex;
     background-color: #EC4258;
     justify-content: center;
+    margin-bottom: 8%;
 }
 
 .hearder_hp p {
@@ -39,6 +40,17 @@ a{
     color: white;
     font-size: 0.8em;
     margin: 0 20px 15px;
+}
+
+.player-deco-button {
+    background-color: #EC4258;
+    border: none;
+    padding: 8px 30px;
+    border-radius: 10px;
+    font-weight: bold;
+    color: white;
+    font-size: 0.8em;
+    margin-left: 42%;
 }
 
 .list_container {
@@ -136,7 +148,7 @@ input {
     border-radius: 5px;
 }
 
-.indice-button, .button_validator, .close-indice{
+.indice-button, .button_validator, .close-indice, .button_rating_validator{
     cursor: pointer;
     background-color: #EC4258;
     border: none;
