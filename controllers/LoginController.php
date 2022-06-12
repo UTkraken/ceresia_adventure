@@ -36,6 +36,12 @@ class LoginController extends Controller
         }
     }
 
+    public function deconnexion(): void
+    {
+        session_destroy();
+        header('Location: ' .  'http://' . $_SERVER['HTTP_HOST'] . '/homepage');
+    }
+
     /** Compare the form password with the hashed password in database
      * @param string $pass
      * @param string $hash
