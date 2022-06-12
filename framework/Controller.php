@@ -131,5 +131,21 @@ abstract class Controller
 
         return $trailsWithEnigma;
     }
+
+    /**
+     * Verify that the date is not empty. Set it to 1990 by default if that's the case
+     * @param string $date
+     *
+     * @return string
+     */
+    public function handleDate(string $date): string
+    {
+        if( $date == '')
+        {
+            return '1990-01-01';
+        }
+
+           return $date;
+    }
 }
 

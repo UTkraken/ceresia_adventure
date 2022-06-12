@@ -74,6 +74,9 @@ class ParcoursCreateurController extends LoggedController
         $trailRepository = new TrailRepository();
         $error = $this->_insertTrackControl();
 
+        $date_start = $this->handleDate($_REQUEST['date_start']);
+        $date_end = $this->handleDate($_REQUEST['date_end']);
+
         if (empty($error)) {
             $trailId = $trailRepository->insert(
                 [
@@ -83,8 +86,8 @@ class ParcoursCreateurController extends LoggedController
                    'level' => $_REQUEST['level'],
                    'user_id' => $userId,
                    'description' => $this->sanitizeTextInput($_REQUEST['description']),
-                   'date_start' => $_REQUEST['date_start'],
-                   'date_end' => $_REQUEST['date_end']
+                   'date_start' => $date_start,
+                   'date_end' =>  $date_end
                 ]
             );
             $trail = $trailRepository->findById((int)$trailId)->row();
@@ -115,7 +118,9 @@ class ParcoursCreateurController extends LoggedController
         $result = $trailRepository->select(['trail_id' => $_POST['trail_id'], 'user_id' => $userId])->result();
         $error = [];
         $trailRepository = new TrailRepository();
-//        $error = $this->_insertTrackControl();
+
+        $date_start = $this->handleDate($_REQUEST['date_start']);
+        $date_end = $this->handleDate($_REQUEST['date_end']);
 
         if (empty($error)) {
 
@@ -127,13 +132,11 @@ class ParcoursCreateurController extends LoggedController
                    'level' => $_REQUEST['level'],
                    'user_id' => $userId,
                    'description' => $this->sanitizeTextInput($_REQUEST['description']),
-                   'date_start' => $_REQUEST['date_start'],
-                   'date_end' => $_REQUEST['date_end']
+                   'date_start' => $date_start,
+                   'date_end' => $date_end
                 ],
                 ['trail_id' => $_REQUEST['trail_id']]
             );
-//            $trail = $trailRepository->findById((int)$trailId)->row();
-//            $_SESSION['trailInfo'] = $trail;
             header('Location: ' . 'http://' . $_SERVER['HTTP_HOST'] . '/parcoursCreateur');
         } else {
             echo '<div class="something">' . $error[0];
