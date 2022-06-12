@@ -158,8 +158,12 @@ input {
     text-align: center;
 }
 
-.modal-indice p:first-child {
+.rating-container {
     font-size: 1.2em;
-    color: #EC4258;
-    font-weight: bold;
+    font-weight: normal;
+    text-align: center;
+}
+
+.rating-container input {
+    margin-bottom: 10%;
 }

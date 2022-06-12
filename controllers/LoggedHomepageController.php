@@ -5,6 +5,7 @@ namespace ceresia_adventure\controllers;
 use ceresia_adventure\framework\LoggedController;
 use ceresia_adventure\models\Trail;
 use ceresia_adventure\repositories\EnigmaRepository;
+use ceresia_adventure\repositories\RatingRepository;
 use ceresia_adventure\repositories\TrailRepository;
 
 class LoggedHomepageController extends LoggedController
@@ -61,10 +62,21 @@ class LoggedHomepageController extends LoggedController
     public function victory(): void
     {
         $id = $_POST['id'];
-
         $trailRepository = new TrailRepository();
         $data_trails = $trailRepository->select(["trail_id"=> $id])->result_array();
         echo $this->twig->render('pages/victory_page.html.twig', ['data_trails' => $data_trails]);
+    }
+
+    public function addRating() :void
+    {
+        $userId = $this->user->getUserId();
+        $trailId = $_POST['id'];
+        $ratingRepository = new RatingRepository();
+         $ratingRepository->insert([
+            'rating' => $_REQUEST['rating'],
+            'trail_id' => intval($trailId),
+            'user_id' => $userId
+        ]);
     }
 
 }

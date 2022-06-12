@@ -1,5 +1,13 @@
 <div>
     <h3>Félicitation !</h3>
-    <p>Vous avez fini  {{ data_trails[0].name }}</p>
-    <a href="/loggedhomepage">Retourner au menu des parcours</a>
+    <div class="rating-container">
+        <p>Vous avez fini le parcours: <br />{{ data_trails[0].name }}</p>
+        <p></p>
+        <label for="rating">Note le parcours (entre 1 et 5):</label>
+        <div>
+            <input type="number" id="rating" name="rating" min="0" max="5">
+        </div>
+        <div class="button_rating_validator">Retourner à l'accueil</div>
+    </div>
+
 </div>

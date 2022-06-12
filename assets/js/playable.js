@@ -19,7 +19,7 @@ $(document).ready(function () {
     });
 
     $(document).on("click", ".button_validator", function () {
-        const solution = $(".button_validator").data('reponse');
+        const solution = $(".button_validator").data('reponse').toString();
         const count = parseInt($(".game-count").data('count'));
         const rep =  $(".reponse_container").val();
         counter = counter +1;
@@ -53,6 +53,22 @@ $(document).ready(function () {
         } else {
             $(".erro-text").html("Mauvaise réponse !")
         }
+    });
+
+    $(document).on("click", ".button_rating_validator", function () {
+        const rating = $("#rating").val();
+        $.ajax({
+            url: "/LoggedHomepage/addRating",
+            method: "POST",
+            dataType: "text",
+            data: {
+                id: id,
+                rating: rating
+            },
+            success: function () {
+               window.location.href = "/loggedhomepage";
+            }
+        });
     });
 
     $(document).on("click", ".indice-button", function () {
