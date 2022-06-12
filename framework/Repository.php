@@ -24,7 +24,13 @@ abstract class Repository
     public function __construct()
     {
         $this->db = Database::getInstance();
+
+        // Get the current class (EnigmaRepository, TrailRepository...) including its path and remove the 'Repository' part
+        // Then replace the 'repositories' part of the path with 'models'. We now have the path to the model corresponding to the repository
         $this->model = str_replace('Repository', '', str_replace('repositories', 'models', get_class($this)));
+
+        // Remove the model path, transform the name into camelCase and append an "s". This gives us the table used in db
+        // ex : 'somepath/models/Trail' will become 'trails'
         $this->table = Tool::addSToSnakeCase(Tool::camelCaseToSnakeCase(str_replace('ceresia_adventure\models\\', '', $this->model)));
         $this->id = Tool::camelCaseToSnakeCase(str_replace('ceresia_adventure\models\\', '', $this->model)) . '_id';
         $this->config = (new Config())->config;
@@ -38,12 +44,25 @@ abstract class Repository
     public function findById(int $id): Repository
     {
         $query = $this->db->query('SELECT * from ' . $this->table . ' where ' . $this->id . ' = ' . $id);
-        $row = $query->fetch(PDO::FETCH_ASSOC);
-        $this->data = [$this->model::populate($row)];
+        $this->data = [$query->fetch(PDO::FETCH_ASSOC)];
+        return $this;
+    }
+    /**
+     * Récupère une ligne de la table correspondant à l'objet en fonction de l'id
+     * @param int $id
+     * @return Repository
+     */
+    public function findAll(): Repository
+    {
+        $query = $this->db->query('SELECT * from ' . $this->table);
+        $this->data = [$query->fetch(PDO::FETCH_ASSOC)];
         return $this;
     }
 
     /**
+     * @param array $data
+     *
+     * @return bool|string
      * @throws Exception
      */
     public function insert(array $data): bool|string
@@ -78,15 +97,31 @@ abstract class Repository
 
     /**
      * @param int $id
+     *
+     * @return int
      */
-    public function delete(int $id): void
+    public function delete(int $id): int
     {
         $sanitizedId = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
         $sql = "DELETE FROM " . $this->table . " WHERE $this->id=" . $sanitizedId;
-        $this->db->query($sql);
+        $query = $this->db->query($sql);
+        return $query->rowCount();
+    }
+
+    /**
+     * @param int $id
+     *
+     * @return int
+     */
+    public function deleteEnigma(int $id): int
+    {
+        $sanitizedId = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
+        $sql = "DELETE FROM enigmas WHERE enigma_id=$sanitizedId";
+        $query = $this->db->query($sql);
+        return $query->rowCount();
     }
     /**
-     * Récupère les lignes de la table correspondant à l'objet en fonction du paramètre where
+     * Récupère les lignes de la table correspondant à l'ob jet en fonction du paramètre where
      * @param array|null $where
      * @param array|null $orderColumns
      * @param array|null $orderDirections
@@ -110,9 +145,15 @@ abstract class Repository
         }
         $query = $this->db->query($sql);
         $this->data = $query->fetchAll(PDO::FETCH_ASSOC);
+
         return $this;
     }
 
+    /** Verify if 'where' conditions exist and if so, append them to the sql query
+     *
+     * @param string $sql
+     * @param array  $where
+     */
     protected function handleWhere(string &$sql, array $where = [])
     {
         $conditions = [];
@@ -194,9 +235,12 @@ abstract class Repository
         return $this->db->query($statement, $mode, ...$fetch_mode_args);
     }
 
-    public function row(): mixed
+    public function row(): ?Model
     {
-        return $this->data[0] ?? null;
+        if (empty($this->data)) {
+            return null;
+        }
+        return $this->model::populate($this->data[0]);
     }
 
     public function result(): array

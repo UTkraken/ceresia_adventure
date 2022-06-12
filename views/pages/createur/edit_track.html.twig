@@ -1,0 +1,74 @@
+{% extends "accueil.html.twig" %}
+{% block css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ assets("css/createur/new_track.css") }}">
+{% endblock %}
+
+
+    {% block title %}
+        <title>Modifier parcours</title>
+    {% endblock %}
+
+{% block content %}
+    <h1 id="pageTitle">Modifier un parcours</h1>
+    <div id="trackFormContainer">
+        <form action="insertTrack" method="POST"  id="add_track_form">
+            <div class="form_row">
+
+                <p class="form_update_label"> Nom</p>
+                <div class="form_col">
+                    <input type="text" name="name" pattern="^[^<>%@!();:/$]*$" placeholder="Nom" value="{{ track[0].name }}" title="Les caractères spéciaux sont interdits (chiffres et lettres uniquement)" required>
+                </div>
+
+                <p class="form_update_label"> Département</p>
+                <div class="form_col">
+                    <input type="number" name="department" placeholder="Département" value="{{ track[0].departement }}" required>
+                </div>
+            </div>
+            <div class="form_row">
+
+                <p class="form_update_label"> Durée</p>
+                <div class="form_col">
+                    <input type="number" name="duration" placeholder="Durée" value={{ track[0].estimatedTime }} required>
+                </div>
+
+                <p class="form_update_label"> Difficulté</p>
+                <div class="form_col">
+                    <input type="number" name="level" placeholder="Difficulté" value={{ track[0].level }} required>
+                </div>
+
+            </div>
+
+            <p class="form_update_label"> Description</p>
+            <div class="form_col_area">
+                <input type="textarea" name="description" pattern="^[^<>%@!();:/$]*$" placeholder="Description" value="{{ track[0].description }}" title="Les caractères spéciaux sont interdits (chiffres et lettres uniquement)" required>
+            </div>
+
+            <div class="form_row_date">
+                <div>Date de début</div>
+                <div>Date de fin</div>
+            </div>
+            <div class="form_row">
+                <div class="form_col">
+                    <input type="date" name="date_start" value={{ track[0].dateStart }}>
+                </div>
+                <div class="form_col">
+                    <input type="date" name="date_end" value={{ track[0].dateEnd }}>
+                </div>
+            </div>
+            {% if app.request.parameter.get("trail_id") is defined  %}
+                <input type="hidden" name="trail_id" value={{ app.request.parameter.get("trail_id") }}>
+
+            {% else %}
+                <input type="hidden" name="trail_id" value={{ trail_id }}>
+            {% endif %}
+
+
+            <input type="submit" class="form_add_submit">
+        </form>
+    </div>
+{% endblock %}
+
+{% block js %}
+    {{ parent() }}
+{% endblock %}

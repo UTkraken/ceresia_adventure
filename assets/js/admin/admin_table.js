@@ -1,12 +1,12 @@
 let reloadTimeId = null;
-let usersTable;
+let adminsTable;
 
 $(document).ready(function () {
-    const $userTable = $('#user-table'),
-        dataUser = $userTable.data('users'),
-        $search = $('#userSearch');
+    const $adminTable = $('#admin-table'),
+        dataUser = $adminTable.data('admins'),
+        $search = $('#adminSearch');
 
-    usersTable = $userTable.DataTable(
+    adminsTable = $adminTable.DataTable(
         {
             ordering:false,
             processing: true,
@@ -15,7 +15,7 @@ $(document).ready(function () {
                 url: '//cdn.datatables.net/plug-ins/1.11.5/i18n/fr-FR.json'
             },
             ajax: {
-                url: "/utilisateurs/get4gridusers",
+                url: "/administrateur/get4gridadmin",
                 type: "POST",
                 data: function (d) {
                     d.pseudo = $search.val();
@@ -25,8 +25,6 @@ $(document).ready(function () {
             data: dataUser['data'],
             paging: false,
             searching: false,
-            scrollY: '500px',
-            scrollCollapse: true,
             columns: [
                 { "data": "user_id" },
                 { "data": "pseudo" },
@@ -41,14 +39,14 @@ $(document).ready(function () {
         clearTimeout(reloadTimeId);
         // Met un couldown pour le lancement du refresh de la dataTable
         reloadTimeId = setTimeout(function () {
-            usersTable.ajax.reload();
+            adminsTable.ajax.reload();
         }, 500); //0.5s
     });
 });
 
 function remove($btn) {
     $.ajax({
-        url: "/utilisateurs/remove",
+        url: "/administrateur/remove",
         method: 'POST',
         dataType: 'json',
         data: {
@@ -57,7 +55,7 @@ function remove($btn) {
         success: function () {
             // fix le tooltip qui reste au refresh
             $('.tooltip').remove();
-            usersTable.ajax.reload();
+            adminsTable.ajax.reload();
         }
     })
 }

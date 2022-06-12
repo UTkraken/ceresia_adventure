@@ -166,13 +166,13 @@
 #trail_create {
     max-width: 60px;
 }
-#trail_action_container {
+.data-table-header {
     display: flex;
     justify-content: space-between;
     align-content: center;
     align-items: center;
 }
-#trail_action_container .form_group {
+.data-table-header .form-group {
     margin-bottom: 0!important;
 }
 .hike {
@@ -430,6 +430,18 @@ input[type="radio"]:checked {
     border-radius: 25px;
 }
 
+.admin-input {
+    color: black;
+}
+
+.box-admin {
+    background-color: #fda6ac !important;
+}
+
+.box-admin:checked {
+    background-color: #EC4258 !important;
+}
+
 /*
 text:focus, input:focus {
     outline: solid 1px rgba(255,255,255,0.4);
@@ -477,6 +489,37 @@ text:focus, input:focus {
     margin-bottom: 15px;
 }
 
+#edit_profile_form {
+    color: black;
+}
+#profile_container {
+    margin: 10% 30px;
+}
+#profile_container h2 {
+    text-align: center;
+}
+
+#profile_hr {
+    width: 65%;
+    background-color: #e97d8d;
+    height: 1px;
+    border-radius: 15px;
+}
+
+.profile_row {
+    font-size: 20px;
+    font-weight: bold;
+    border-bottom: solid 1px #EC4258;
+    margin-bottom: 3%;
+    padding: 5px;
+    color: #EC4258;
+
+}
+.profile_row p {
+    margin-left: 20px;
+    font-size: 18px;
+    font-weight: normal;
+}
 
 
 /* Cerescope */
@@ -590,4 +633,15 @@ table {
 
 table a, table button {
     margin-right: 10px;
+}
+
+.deconnexion-button {
+    cursor: pointer;
+    background-color: #EC4258;
+    border: none;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 7px;
+    margin-left: 5%;
+    margin-bottom: 5%;
 }

@@ -61,8 +61,19 @@ class Trail extends Model
 
         $nbEnigmas = $enigmaRepository->countEnigmaByTrail($trailSql['trail_id']);
         $createur = $userRepository->findById($trailSql['user_id'])->row();
-        $trail = new Trail($trailSql['trail_id'], $trailSql['name'], $trailSql['departement'], $trailSql['estimated_time'],
-            $trailSql['level'], $trailSql['rating'], $trailSql['description'], $trailSql['date_start'], $trailSql['date_end'], $createur, $nbEnigmas, $trailSql['visible']);
+        $trail = new Trail(
+            $trailSql['trail_id'],
+            $trailSql['name'],
+            $trailSql['departement'],
+            $trailSql['estimated_time'],
+            $trailSql['level'],
+            5,
+            $trailSql['description'],
+            $trailSql['date_start'],
+            $trailSql['date_end'],
+            $createur,
+            $nbEnigmas,
+            $trailSql['visible']);
         return $trail;
     }
 

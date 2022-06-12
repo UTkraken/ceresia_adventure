@@ -1,0 +1,56 @@
+{% extends "accueil.html.twig" %}
+
+{% block css %}
+    {{ parent() }}
+
+    {% include "_partials/_css_datatable.html.twig" %}
+{% endblock %}
+
+    {% block title %}
+        <title>Liste Enigmes</title>
+    {% endblock %}
+
+{% block content %}
+
+    <div id="enigma_container">
+
+       <h1 id="pageTitle">Liste des énigmes</h1>
+        <div class="data-table-header">
+            <form action="enigma/addNewEnigma" method="POST"  id="add_track_form">
+                <input id="id" name="trail_id" type="hidden" value={{ trail_id }}>
+                <button type="submit" class="btn btn-default">
+                    <div class="btn btn-danger btn-lg enigma_create">Créer une énigme</div>
+                </button>
+            </form>
+
+
+            <div class="form-group">
+                <input type="text" class="form-control" id="enigmaSearch" aria-describedby="enigmaSearch" placeholder="Recherche">
+            </div>
+        </div>
+
+        <table id="enigma-table" class="display" style="width: 100%" data-enigmas="{{ data_enigmas }}">
+            <thead>
+                <tr>
+                    <th>Id trail</th>
+                    <th>Nom de l'énigme</th>
+                    <th>Question</th>
+                    <th>Réponse</th>
+                    <th>Difficulté</th>
+                    <th>Temps estimé</th>
+                    <th>Indice</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+        </table>
+
+    </div>
+
+{% endblock %}
+
+{% block js %}
+    {{ parent() }}
+
+    {% include "_partials/_javascript_datatable.html.twig" %}
+    <script type="text/javascript" src="{{ assets("js/createur/enigma_table.js") }}"></script>
+{% endblock %}

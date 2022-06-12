@@ -14,6 +14,7 @@ class Config
             throw new \RuntimeException(sprintf('%s file is not readable', $this::PATH));
         }
 
+        //Read the '.env' file and store it in an array. Each index stores 1 line
         $lines = file($this::PATH, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
         foreach ($lines as $line) {
 

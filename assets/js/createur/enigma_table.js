@@ -1,12 +1,11 @@
 let reloadTimeId = null;
-let trailsTable;
+let enigmasTable;
 
 $(document).ready(function () {
-    const $trailTable = $('#trail-table'),
-        data_trail = $trailTable.data('trails'),
-        $search = $('#trailSearch');
-
-    trailsTable = $trailTable.DataTable(
+    const $enigmaTable = $('#enigma-table'),
+        data_enigmas = $enigmaTable.data('enigmas'),
+        $search = $('#enigmaSearch');
+    enigmasTable = $enigmaTable.DataTable(
         {
             ordering:false,
             processing: true,
@@ -15,26 +14,26 @@ $(document).ready(function () {
                 url: '//cdn.datatables.net/plug-ins/1.11.5/i18n/fr-FR.json'
             },
             ajax: {
-                url: "/ParcoursCreateur/get4gridTrails",
+                url: "/enigma/get4gridEnigmas",
                 type: "POST",
                 data: function (d) {
                     d.name = $search.val();
                 }
             },
-            deferLoading: data_trail['recordsFiltered'],
-            data: data_trail['data'],
+            deferLoading: data_enigmas['recordsFiltered'],
+            data: data_enigmas['data'],
             paging: false,
+            searching: false,
             scrollY: '500px',
             scrollCollapse: true,
-            searching: false,
             columns: [
+                {data: "trail_id"},
                 {data: "name"},
-                {data: "dateEnd"},
+                {data: "question"},
+                {data: "answer"},
+                {data: "difficulty"},
                 {data: "estimatedTime"},
-                {data: "level"},
-                {data: "nbEnigmas"},
-                {data: "rating"},
-                {data: "test"},
+                {data: "hint"},
                 {data: "actions"}
             ]
         }
@@ -45,14 +44,14 @@ $(document).ready(function () {
         clearTimeout(reloadTimeId);
         // Met un couldown pour le lancement du refresh de la dataTable
         reloadTimeId = setTimeout(function () {
-            trailsTable.ajax.reload();
+            enigmasTable.ajax.reload();
         }, 500); //0.5s
     });
 });
 
 function visible($btn) {
     $.ajax({
-        url: "/ParcoursCreateur/visible",
+        url: "/enigma/visible",
         method: 'POST',
         dataType: 'json',
         data: {
@@ -62,23 +61,28 @@ function visible($btn) {
         success: function () {
             // fix le tooltip qui reste au refresh
             $('.tooltip').remove();
-            trailsTable.ajax.reload();
+            enigmasTable.ajax.reload();
         }
     })
 }
 
 function remove($btn) {
     $.ajax({
-        url: "/ParcoursCreateur/remove",
+        url: "/enigma/remove",
         method: 'POST',
         dataType: 'json',
         data: {
             id: $btn.data('id')
         },
-        success: function () {
+        success: function (e) {
             // fix le tooltip qui reste au refresh
             $('.tooltip').remove();
-            trailsTable.ajax.reload();
+            enigmasTable.ajax.reload();
+        },
+        error: function(e) {
+            console.log("error", e)
         }
+
     })
 }
+

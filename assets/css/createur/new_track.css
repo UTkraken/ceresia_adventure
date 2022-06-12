@@ -55,6 +55,17 @@
     margin-right: 40px;
 }
 
+.form_update_label {
+    margin-right: 5px;
+}
+.form_error {
+    width: 100%;
+    background-color: #EC4258;
+    text-align: center;
+    font-size: 30px;
+    color: white;
+}
+
 .form_add_submit{
     background-color: #EC4258;
     border: none;

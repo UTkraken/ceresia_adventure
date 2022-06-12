@@ -20,13 +20,13 @@
 <div id="loginBackground"></div>
     <div id="formContainer">
 
-        <form action="inscription/addUser" method="POST" id="login_form">
+        <form action="/inscription/addUser" method="POST" id="login_form">
             <div id="formImage">
                 <img src="{{ assets('img/logo_with_back.png') }}" alt="">
             </div>
             <div class="form_row">
                 <img src="{{ assets("img/account.png") }}" alt="Pseudonyme" class="input_logo">
-                <input type="pseudo" name="pseudo" placeholder="Pseudo" required>
+                <input type="pseudo" name="pseudo" pattern="^[^<>%@!();:/$]*$" title="Les caractères spéciaux sont interdits (chiffres et lettres uniquement)" placeholder="Pseudo" required>
             </div>
             <div class="form_row">
                 <img src="{{ assets("img/mail.png") }}" alt="Mail" class="input_logo">
@@ -64,7 +64,7 @@
             <div class="form_submit ">
                 <input type="submit" value="Inscription">
             </div>
-            <p> Vous avez un compte ? <a href="login">Connectez-vous</a></p>
+            <p> Vous avez un compte ? <a href="/login">Connectez-vous</a></p>
         </form>
     </div>
 

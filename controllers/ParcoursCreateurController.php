@@ -4,7 +4,9 @@ declare(strict_types=1);
 namespace ceresia_adventure\controllers;
 
 use ceresia_adventure\framework\LoggedController;
+use ceresia_adventure\models\Trail;
 use ceresia_adventure\repositories\TrailRepository;
+use ceresia_adventure\repositories\UserRepository;
 use ceresia_adventure\utils\Tool;
 
 
@@ -24,9 +26,7 @@ class ParcoursCreateurController extends LoggedController
     private function _get4gridTrails(?string $name, ?int $userId): string
     {
         $trailRepository = new TrailRepository();
-
-        $result = $trailRepository->select(['supprime' => 0, 'name' => '%' . $name . '%', 'user_id' => $userId])->result();
-
+        $result = $trailRepository->select(['user_id' => $this->user->getUserId()])->result();
         $trails = [];
 
         foreach ($result as $row) {
@@ -45,8 +45,9 @@ class ParcoursCreateurController extends LoggedController
             } else {
                 $actions .= Tool::addBtnDataTable('visible', 'fa-eye', 'visible', 'Rendre le parcours public', ['id' => $row->getTrailId(), 'visible' => (int)!$row->isVisible()]);
             }
-            $actions .= Tool::addBtnRedirectDataTable('edit', 'fa-pencil', '/parcoursCreateur/edit?id=' . $row->getTrailId(), 'Modifier le parcours');
-            $actions .= Tool::addBtnDataTable('edit', 'fa-trash', 'remove', 'Supprimer le parcours', ['id' => $row->getTrailId()]);
+            $actions .= Tool::addBtnRedirectTrailEditDataTable($row->getTrailId(), 'fa-pencil', '/parcoursCreateur/editTrack', 'Modifier le parcours');
+            $actions .= Tool::addBtnRedirectEditDataTable($row->getTrailId(), 'fa-pencil', '/enigma', 'Modifier les énigmes');
+            $actions .= Tool::addBtnDataTable('remove', 'fa-trash', 'remove', 'Supprimer le parcours', ['id' => $row->getTrailId()]);
 
             $trail['actions'] = $actions;
             $trails[] = $trail;
@@ -59,13 +60,89 @@ class ParcoursCreateurController extends LoggedController
     {
         $name = $_POST['name'];
         $userId = $this->user->getUserId();
-        
+
         echo $this->_get4gridTrails($name, $userId);
     }
 
     public function addNewTrack(): void
     {
         echo $this->twig->render('pages/createur/add_new_track.html.twig');
+    }
+    public function addTrack(): void
+    {
+        $userId = $this->user->getUserId();
+        $trailRepository = new TrailRepository();
+        $error = $this->_insertTrackControl();
+
+        $date_start = $this->handleDate($_REQUEST['date_start']);
+        $date_end = $this->handleDate($_REQUEST['date_end']);
+
+        if (empty($error)) {
+            $trailId = $trailRepository->insert(
+                [
+                   'name' => $this->sanitizeTextInput($_REQUEST['name']),
+                   'departement' => $_REQUEST['department'],
+                   'estimated_time' => $_REQUEST['duration'],
+                   'level' => $_REQUEST['level'],
+                   'user_id' => $userId,
+                   'description' => $this->sanitizeTextInput($_REQUEST['description']),
+                   'date_start' => $date_start,
+                   'date_end' =>  $date_end
+                ]
+            );
+            $trail = $trailRepository->findById((int)$trailId)->row();
+            $_SESSION['trailInfo'] = $trail;
+            header('Location: ' . 'http://' . $_SERVER['HTTP_HOST'] . '/parcoursCreateur');
+        } else {
+            echo $this->twig->render('pages/createur/add_new_track.html.twig', ['errors'=>$error]);
+        }
+
+        echo $this->twig->render('pages/createur/add_new_track.html.twig');
+    }
+
+    public function editTrack(): void
+    {
+        $trailRepository = new TrailRepository();
+        $userId = $this->user->getUserId();
+
+        $result = $trailRepository->select(['trail_id' => $_POST['trail_id'], 'user_id' => $userId])->result();
+
+        echo $this->twig->render('pages/createur/edit_track.html.twig', ['track' => $result, 'trail_id' => $_POST['trail_id']]);
+    }
+
+    public function insertTrack(): void
+    {
+        $trailRepository = new TrailRepository();
+
+        $userId = $this->user->getUserId();
+        $result = $trailRepository->select(['trail_id' => $_POST['trail_id'], 'user_id' => $userId])->result();
+        $error = [];
+        $trailRepository = new TrailRepository();
+
+        $date_start = $this->handleDate($_REQUEST['date_start']);
+        $date_end = $this->handleDate($_REQUEST['date_end']);
+
+        if (empty($error)) {
+
+            $trailId = $trailRepository->update(
+                [
+                   'name' => $this->sanitizeTextInput($_REQUEST['name']),
+                   'departement' => $_REQUEST['department'],
+                   'estimated_time' => $_REQUEST['duration'],
+                   'level' => $_REQUEST['level'],
+                   'user_id' => $userId,
+                   'description' => $this->sanitizeTextInput($_REQUEST['description']),
+                   'date_start' => $date_start,
+                   'date_end' => $date_end
+                ],
+                ['trail_id' => $_REQUEST['trail_id']]
+            );
+            header('Location: ' . 'http://' . $_SERVER['HTTP_HOST'] . '/parcoursCreateur');
+        } else {
+            echo '<div class="something">' . $error[0];
+        }
+
+        echo $this->twig->render('pages/createur/edit_track.html.twig');
     }
 
     public function visible(): void
@@ -82,6 +159,17 @@ class ParcoursCreateurController extends LoggedController
         $id = $_POST['id'];
 
         $trailRepository = new TrailRepository();
-        echo $trailRepository->update(['supprime' => 1], ['trail_id' => $id]);
+        echo $trailRepository->delete(intval($id));
+    }
+
+    private function _insertTrackControl(): array
+    {
+        $trailRepository = new TrailRepository();
+        $trailVerif = $trailRepository->select(['name' => $_REQUEST['name']])->row();
+        $errors = [];
+        if ($trailVerif != null) {
+            $errors[] = 'Le parcours existe déjà';
+        }
+        return $errors;
     }
 }
