@@ -634,3 +634,14 @@ table {
 table a, table button {
     margin-right: 10px;
 }
+
+.deconnexion-button {
+    cursor: pointer;
+    background-color: #EC4258;
+    border: none;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 7px;
+    margin-left: 5%;
+    margin-bottom: 5%;
+}
