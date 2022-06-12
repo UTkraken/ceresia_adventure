@@ -55,7 +55,7 @@ CREATE TABLE enigmas
 ALTER TABLE enigmas
     ADD CONSTRAINT FK_enigmas_trails FOREIGN KEY (trail_id) REFERENCES trails (trail_id);
 
-CREATE TABLE trail_user_rating
+CREATE TABLE ratings
 (
     `rating_id`   int NOT NULL AUTO_INCREMENT,
     `rating` int,
