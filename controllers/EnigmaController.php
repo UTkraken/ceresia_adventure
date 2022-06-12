@@ -56,7 +56,6 @@ class EnigmaController extends LoggedController
             $enigma            = [
                 'trail_id'      => $row->getTrail()->getTrailId(),
                 'name'          => $row->getName(),
-                'image'         => $row->getImage(),
                 'question'      => $row->getQuestion(),
                 'answer'        => $row->getAnswer(),
                 'difficulty'    => $row->getDifficulty(),
@@ -102,7 +101,6 @@ class EnigmaController extends LoggedController
                     'difficulty' => $_REQUEST['difficulty'],
                     'estimated_time' => $_REQUEST['estimatedTime'],
                     'trail_id' => $_REQUEST['trail_id'] ,
-                    'image_url' => "Image path"
                 ]
             );
             $enigma = $enigmaRepository->findById((int)$enigmaId)->row();
@@ -149,7 +147,6 @@ class EnigmaController extends LoggedController
                     'hint' => $this->sanitizeTextInput($_REQUEST['hint']),
                     'difficulty' => $_REQUEST['difficulty'],
                     'estimated_time' => $_REQUEST['estimatedTime'],
-                    'image_url' => "Image path"
                 ],
                 ['enigma_id' => $_REQUEST['enigma_id']]
             );

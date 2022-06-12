@@ -29,7 +29,6 @@ $(document).ready(function () {
             columns: [
                 {data: "trail_id"},
                 {data: "name"},
-                {data: "image"},
                 {data: "question"},
                 {data: "answer"},
                 {data: "difficulty"},

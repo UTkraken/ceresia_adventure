@@ -2,8 +2,9 @@
 
 namespace ceresia_adventure\framework;
 
+use ceresia_adventure\models\Trail;
+use ceresia_adventure\repositories\EnigmaRepository;
 use ceresia_adventure\utils\Config;
-use ceresia_adventure\utils\Constantes;
 
 abstract class Controller
 {
@@ -107,6 +108,28 @@ abstract class Controller
     {
         $cleanedString = str_replace(self::_FORBIDDEN_CHARACTERS, "", $text);
         return filter_var($cleanedString,FILTER_SANITIZE_STRING);
+    }
+
+    /**
+     * Return an array of all trails that have at least 1 enigma
+     * @param array $trails
+     *
+     * @return array
+     */
+    protected function getTrailsWithEnigma(array $trails): array
+    {
+        $enigmaRepository = new EnigmaRepository();
+        $trailsWithEnigma = [];
+        /** @var Trail $trail */
+        foreach ($trails as $trail)
+        {
+            if($enigmaRepository->countEnigmaByTrail($trail['trail_id']) > 0)
+            {
+                array_push($trailsWithEnigma, $trail);
+            }
+        }
+
+        return $trailsWithEnigma;
     }
 }
 

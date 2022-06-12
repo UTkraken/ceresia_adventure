@@ -55,7 +55,7 @@ CREATE TABLE enigmas
 ALTER TABLE enigmas
     ADD CONSTRAINT FK_enigmas_trails FOREIGN KEY (trail_id) REFERENCES trails (trail_id);
 
-CREATE TABLE trail_user_rating
+CREATE TABLE ratings
 (
     `rating_id`   int NOT NULL AUTO_INCREMENT,
     `rating` int,
@@ -72,6 +72,6 @@ VALUES (1, 'Joueur'),
        (3, 'Admin');
 
 INSERT INTO users (pseudo, email, password, user_type_id, departement)
-VALUES ('Joueur', 'test@gmail.com', 'test', 1, '83'),
-       ('Créateur', 'test@gmail.com', 'test', 2, '83'),
+VALUES ('Joueur', 'test@gmail.com', '$2y$10$OoySlgoEp5nlx85/OmIrXehgghiyrITv29IUBzpEuB1E6sgztEeLW', 1, '83'),
+       ('Créateur', 'test@gmail.com', '$2y$10$aj.d9hHkK.ImLOCH9Ixi6Og5C4xXNLKbWQhmWukjmqQVuPmy/WxUi', 2, '83'),
        ('Admin', 'admin@gmail.com', '$2y$10$YimIdIK.OKKYVfBlHDmfyuUJcx.6VuDQ6eu/b5kvM3CKLhZOPM4tS', 3, '83');

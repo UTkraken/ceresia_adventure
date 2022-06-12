@@ -24,7 +24,13 @@ abstract class Repository
     public function __construct()
     {
         $this->db = Database::getInstance();
+
+        // Get the current class (EnigmaRepository, TrailRepository...) including its path and remove the 'Repository' part
+        // Then replace the 'repositories' part of the path with 'models'. We now have the path to the model corresponding to the repository
         $this->model = str_replace('Repository', '', str_replace('repositories', 'models', get_class($this)));
+
+        // Remove the model path, transform the name into camelCase and append an "s". This gives us the table used in db
+        // ex : 'somepath/models/Trail' will become 'trails'
         $this->table = Tool::addSToSnakeCase(Tool::camelCaseToSnakeCase(str_replace('ceresia_adventure\models\\', '', $this->model)));
         $this->id = Tool::camelCaseToSnakeCase(str_replace('ceresia_adventure\models\\', '', $this->model)) . '_id';
         $this->config = (new Config())->config;

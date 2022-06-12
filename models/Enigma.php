@@ -11,7 +11,6 @@ class Enigma extends Model
 {
     private int $enigmaId;
     private string $name;
-    private string $image;
     private string $question;
     private string $answer;
     private int $difficulty;
@@ -24,7 +23,6 @@ class Enigma extends Model
      *
      * @param int    $enigmaId
      * @param string $name
-     * @param string $image
      * @param string $question
      * @param string $answer
      * @param int    $difficulty
@@ -32,11 +30,10 @@ class Enigma extends Model
      * @param String $hint
      * @param Trail  $trail
      */
-    public function __construct(int $enigmaId, string $name, string $image, string $question, string $answer, int $difficulty, int $estimatedTime, string $hint, Trail $trail)
+    public function __construct(int $enigmaId, string $name, string $question, string $answer, int $difficulty, int $estimatedTime, string $hint, Trail $trail)
     {
         $this->enigmaId      = $enigmaId;
         $this->name          = $name;
-        $this->image         = $image;
         $this->question      = $question;
         $this->answer        = $answer;
         $this->difficulty    = $difficulty;
@@ -55,7 +52,6 @@ class Enigma extends Model
         $enigma = new Enigma(
             $enigmaSql['enigma_id'],
             $enigmaSql['name'],
-            $enigmaSql['image_url'],
             $enigmaSql['question'],
             $enigmaSql['answer'],
             $enigmaSql['difficulty'],
@@ -97,22 +93,6 @@ class Enigma extends Model
     public function setName(string $name): void
     {
         $this->name = $name;
-    }
-
-    /**
-     * @return string
-     */
-    public function getImage(): string
-    {
-        return $this->image;
-    }
-
-    /**
-     * @param string $image
-     */
-    public function setImage(string $image): void
-    {
-        $this->image = $image;
     }
 
     /**
