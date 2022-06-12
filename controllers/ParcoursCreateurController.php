@@ -6,6 +6,7 @@ namespace ceresia_adventure\controllers;
 use ceresia_adventure\framework\LoggedController;
 use ceresia_adventure\models\Trail;
 use ceresia_adventure\repositories\TrailRepository;
+use ceresia_adventure\repositories\UserRepository;
 use ceresia_adventure\utils\Tool;
 
 
@@ -25,7 +26,7 @@ class ParcoursCreateurController extends LoggedController
     private function _get4gridTrails(?string $name, ?int $userId): string
     {
         $trailRepository = new TrailRepository();
-        $result = $trailRepository->select(['supprime' => 0, 'user_id' => $this->user->getUserId()])->result();
+        $result = $trailRepository->select(['user_id' => $this->user->getUserId()])->result();
         $trails = [];
 
         foreach ($result as $row) {
@@ -155,7 +156,7 @@ class ParcoursCreateurController extends LoggedController
         $id = $_POST['id'];
 
         $trailRepository = new TrailRepository();
-        echo $trailRepository->update(['supprime' => 1], ['trail_id' => $id]);
+        echo $trailRepository->delete(intval($id));
     }
 
     private function _insertTrackControl(): array
