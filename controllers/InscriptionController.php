@@ -42,10 +42,13 @@ class InscriptionController extends Controller
         $errors = [];
         $userRepository = new UserRepository();
         $userVerif = $userRepository->select(['email' => $_REQUEST['email']])->row();
-
         if ($_REQUEST['password'] != $_REQUEST['password_confirm'])
         {
             array_push($errors, 'Les mots de passe sont différents');
+        }
+        if ($_REQUEST['user_type_id'] != 0)
+        {
+            array_push($errors, 'Veuillez renseigner un type de compte');
         }
         if ($userVerif != null)
         {
