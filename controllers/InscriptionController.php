@@ -46,7 +46,7 @@ class InscriptionController extends Controller
         {
             array_push($errors, 'Les mots de passe sont différents');
         }
-        if ($_REQUEST['user_type_id'] != 0)
+        if ($_REQUEST['user_type_id'] == '')
         {
             array_push($errors, 'Veuillez renseigner un type de compte');
         }

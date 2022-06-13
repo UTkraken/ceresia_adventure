@@ -72,6 +72,10 @@ class UtilisateursController extends LoggedController
         $userId = $this->user->getUserId();
         $userRepository = new UserRepository();
         $error = $this->_insertControl();
+        if ($_REQUEST['user_type_id'] == '') {
+            array_push($error, 'Veuillez sélectionner un type de compte');
+        }
+
         if (empty($error)) {
             $userId = $userRepository->insert(
                 [
