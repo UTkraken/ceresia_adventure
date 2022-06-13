@@ -24,11 +24,12 @@ abstract class Controller
 
         $this->config = (new Config())->config;
 
-        $this->asset = 'http://' . $_SERVER['HTTP_HOST'] . '/assets';
+        $this->asset = 'http://' . $_SERVER['HTTP_HOST'] . '/assets/';
 
         $assets = new \Twig\TwigFunction('assets', function (string $url) {
-            return $this->asset . DIRECTORY_SEPARATOR . $url;
+            return $this->asset . $url;
         });
+
         $this->twig->addFunction($assets);
 
         //Get the current class used by the route
