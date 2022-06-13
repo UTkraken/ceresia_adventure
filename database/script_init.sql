@@ -56,7 +56,7 @@ CREATE TABLE enigmas
     CONSTRAINT PK_enigmas PRIMARY KEY (`enigma_id`)
 );
 ALTER TABLE enigmas
-    ADD CONSTRAINT FK_enigmas_trails FOREIGN KEY (trail_id) REFERENCES trails (trail_id);
+    ADD CONSTRAINT FK_enigmas_trails FOREIGN KEY (trail_id) REFERENCES trails (trail_id) on delete CASCADE;
 
 CREATE TABLE ratings
 (
