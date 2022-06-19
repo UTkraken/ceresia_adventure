@@ -157,7 +157,7 @@ abstract class Controller
             $average = array_sum($ratingsCollector) / count($ratingsCollector);
         }
 
-        return $average;
+        return round($average, 1, PHP_ROUND_HALF_DOWN);
     }
 
     /**

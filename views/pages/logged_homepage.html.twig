@@ -54,7 +54,7 @@
                             <p>{{ data.departement }}</p>
                             <p>{{ data.estimated_time }}</p>
                             {% if  data.rating >= 0 %}
-                                <p> {{ data.rating }}</p>
+                                <p> {{ data.rating|round(1, 'floor') }}</p>
                                 {% else %}
                                     <p> - </p>
                             {% endif %}
