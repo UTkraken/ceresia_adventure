@@ -22,8 +22,8 @@ $(document).ready(function () {
         const solution = $(".button_validator").data('reponse').toString();
         const count = parseInt($(".game-count").data('count'));
         const rep =  $(".reponse_container").val();
-        counter = counter +1;
         if ( solution.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase() === rep.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase() ) {
+            counter = counter +1;
             if ( counter !== count ) {
                 $.ajax({
                     url: "/loggedhomepage/nextenigma",
