@@ -354,6 +354,16 @@
     width: 50%;
     position: relative;
 }
+@media screen and (max-width: 1000px)
+{
+    #formContainer form {
+        width: 85%;
+    }
+    #formImage + .form_row {
+        margin-top: 45px;
+    }
+}
+
 #formImage {
     width: 135px;
     height: auto;
