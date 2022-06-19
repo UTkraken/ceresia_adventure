@@ -53,7 +53,12 @@
                         <div class="item_contrainte">
                             <p>{{ data.departement }}</p>
                             <p>{{ data.estimated_time }}</p>
-                            <p>{{ data.rating }}</p>
+                            {% if  data.rating >= 0 %}
+                                <p> {{ data.rating }}</p>
+                                {% else %}
+                                    <p> - </p>
+                            {% endif %}
+
                         </div>
                     </div>
                 {% endfor %}
