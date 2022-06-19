@@ -3,7 +3,9 @@
 namespace ceresia_adventure\controllers;
 
 use ceresia_adventure\framework\LoggedController;
+use ceresia_adventure\models\Rating;
 use ceresia_adventure\models\User;
+use ceresia_adventure\repositories\RatingRepository;
 use ceresia_adventure\repositories\UserRepository;
 use ceresia_adventure\utils\Tool;
 
@@ -30,9 +32,24 @@ class UtilisateursController extends LoggedController
         $id = $_POST['id'];
 
         $userRepository = new UserRepository();
+        $this->removeRatingsFromUser($id);
+
         echo $userRepository->delete($id);
     }
 
+    /**
+     * @param int $id
+     */
+    private function removeRatingsFromUser(int $id): void
+    {
+        $ratingRepository = new RatingRepository();
+        $ratings = $ratingRepository->select(['user_id' => $id])->result();
+        /** @var Rating $rating */
+        foreach ($ratings as $rating)
+        {
+            echo $ratingRepository->delete($rating->getRatingId());
+        }
+    }
     private function _get4gridUsers(?string $pseudo): string
     {
         $userRepository = new UserRepository();
