@@ -12,17 +12,22 @@
 {% block content %}
     <h1 id="pageTitle">Modifier un utilisateur</h1>
     <div id="trackFormContainer">
+        {% if errors is not empty %}
+            {% for error in errors %}
+                {{ error }}
+            {% endfor %}
+        {% endif %}
         <form action="insertUser" method="POST"  id="edit_user_form">
             <div class="form_row">
 
                 <p class="form_update_label"> Pseudo</p>
                 <div class="form_col">
-                    <input type="text" name="pseudo" pattern="^[^<>%@!();:/$]*$" title="Les caractères spéciaux sont interdits (chiffres et lettres uniquement)" placeholder="Pseudo" value="{{ user[0].pseudo }}" required>
+                    <input type="text" name="pseudo" pattern="^[^<>%@!();:/$]*$" title="Les caractères spéciaux sont interdits (chiffres et lettres uniquement)" placeholder="Pseudo" value="{{ user.pseudo }}" required>
                 </div>
 
                 <p class="form_update_label"> Email</p>
                 <div class="form_col">
-                    <input type="email" name="email" placeholder="Email" value="{{ user[0].email }}" required>
+                    <input type="email" name="email" placeholder="Email" value="{{ user.email }}" required>
                 </div>
             </div>
 

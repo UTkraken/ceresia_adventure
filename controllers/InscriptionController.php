@@ -22,7 +22,7 @@ class InscriptionController extends Controller
         if (empty($errors)) {
             $userId = $userRepository->insert(
                 [
-                    'pseudo' => $this->validatePseudo($_REQUEST['pseudo']),
+                    'pseudo' => $_REQUEST['pseudo'],
                     'email' => $_REQUEST['email'],
                     'password' => password_hash($_REQUEST['password'],PASSWORD_DEFAULT),
                     'user_type_id' => $_REQUEST['user_type_id'],
@@ -42,10 +42,13 @@ class InscriptionController extends Controller
         $errors = [];
         $userRepository = new UserRepository();
         $userVerif = $userRepository->select(['email' => $_REQUEST['email']])->row();
-
         if ($_REQUEST['password'] != $_REQUEST['password_confirm'])
         {
             array_push($errors, 'Les mots de passe sont différents');
+        }
+        if ($_REQUEST['user_type_id'] == '')
+        {
+            array_push($errors, 'Veuillez renseigner un type de compte');
         }
         if ($userVerif != null)
         {
@@ -58,7 +61,7 @@ class InscriptionController extends Controller
 
         if($this->validatePseudo($_REQUEST['pseudo']) == 0)
         {
-            array_push($errors, 'Nom invalide (seuls les chiffres et lettres sont autorisés');
+            array_push($errors, 'Pseudo invalide (seuls les chiffres et lettres sont autorisés');
         }
 
         return $errors;

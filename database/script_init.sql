@@ -18,10 +18,13 @@ CREATE TABLE users
     `password`     varchar(255) not null,
     `user_type_id` int          not null,
     `departement`  varchar(3)   not null,
-    CONSTRAINT PK_users PRIMARY KEY (`user_id`)
+    CONSTRAINT PK_users PRIMARY KEY (`user_id`),
+    UNIQUE KEY `email` (`email`) USING HASH,
+
 );
 ALTER TABLE users
     ADD CONSTRAINT FK_users_users_types FOREIGN KEY (user_type_id) REFERENCES users_types (user_type_id);
+
 
 CREATE TABLE trails
 (
@@ -53,7 +56,7 @@ CREATE TABLE enigmas
     CONSTRAINT PK_enigmas PRIMARY KEY (`enigma_id`)
 );
 ALTER TABLE enigmas
-    ADD CONSTRAINT FK_enigmas_trails FOREIGN KEY (trail_id) REFERENCES trails (trail_id);
+    ADD CONSTRAINT FK_enigmas_trails FOREIGN KEY (trail_id) REFERENCES trails (trail_id) on delete CASCADE;
 
 CREATE TABLE ratings
 (

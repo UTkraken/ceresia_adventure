@@ -2,8 +2,10 @@
 
 namespace ceresia_adventure\framework;
 
+use ceresia_adventure\models\Rating;
 use ceresia_adventure\models\Trail;
 use ceresia_adventure\repositories\EnigmaRepository;
+use ceresia_adventure\repositories\RatingRepository;
 use ceresia_adventure\utils\Config;
 
 abstract class Controller
@@ -24,11 +26,12 @@ abstract class Controller
 
         $this->config = (new Config())->config;
 
-        $this->asset = 'http://' . $_SERVER['HTTP_HOST'] . '/assets';
+        $this->asset = 'http://' . $_SERVER['HTTP_HOST'] . '/assets/';
 
         $assets = new \Twig\TwigFunction('assets', function (string $url) {
-            return $this->asset . DIRECTORY_SEPARATOR . $url;
+            return $this->asset . $url;
         });
+
         $this->twig->addFunction($assets);
 
         //Get the current class used by the route
@@ -120,16 +123,41 @@ abstract class Controller
     {
         $enigmaRepository = new EnigmaRepository();
         $trailsWithEnigma = [];
-        /** @var Trail $trail */
         foreach ($trails as $trail)
         {
             if($enigmaRepository->countEnigmaByTrail($trail['trail_id']) > 0)
             {
+                $trail['rating'] = $this->getAverageRating($trail);
                 array_push($trailsWithEnigma, $trail);
             }
         }
 
         return $trailsWithEnigma;
+    }
+
+    /**
+     * Get all ratings for a trail, then calculate the average. Defaults at -1 if no rating exists
+     * @param array $trail
+     *
+     * @return float
+     */
+    public function getAverageRating(array $trail): float
+    {
+        $ratingRepository = new RatingRepository();
+
+        $average = -1;
+        $ratingsCollector = [];
+        $ratings = $ratingRepository->select(["trail_id" => $trail['trail_id']])->result();
+        if (count($ratings) > 0) {
+
+            /** @var Rating $rating */
+            foreach ($ratings as $rating) {
+                array_push($ratingsCollector, $rating->getRating());
+            }
+            $average = array_sum($ratingsCollector) / count($ratingsCollector);
+        }
+
+        return $average;
     }
 
     /**

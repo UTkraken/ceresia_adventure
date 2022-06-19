@@ -3,6 +3,7 @@
 namespace ceresia_adventure\controllers;
 
 use ceresia_adventure\framework\LoggedController;
+use ceresia_adventure\models\Rating;
 use ceresia_adventure\models\Trail;
 use ceresia_adventure\repositories\EnigmaRepository;
 use ceresia_adventure\repositories\RatingRepository;
@@ -42,7 +43,16 @@ class LoggedHomepageController extends LoggedController
         $counter = $_POST['counter'];
 
         $enigmaRepository = new EnigmaRepository();
+        $ratingRepository = new RatingRepository();
         $data_enigma = $enigmaRepository->select(['trail_id'=>$id])->result_array();
+
+        $userRating = $ratingRepository->select(['user_id' => $this->user->getUserId(), 'trail_id' => $id])->row();
+        if($userRating)
+        {
+            echo "<div class='list_container'><h3> Parcours déjà accompli </h3></div>";
+            echo "<a href='/loggedhomepage'> Retourner à l'accueil </a>";
+
+        } else
         echo $this->twig->render('pages/gameview.html.twig', ['data_enigma' => $data_enigma, 'count' => count($data_enigma), 'counter' => $counter]);
     }
 

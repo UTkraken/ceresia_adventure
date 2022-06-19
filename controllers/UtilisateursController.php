@@ -2,9 +2,8 @@
 
 namespace ceresia_adventure\controllers;
 
-use ceresia_adventure\framework\Controller;
 use ceresia_adventure\framework\LoggedController;
-use ceresia_adventure\repositories\TrailRepository;
+use ceresia_adventure\models\User;
 use ceresia_adventure\repositories\UserRepository;
 use ceresia_adventure\utils\Tool;
 
@@ -73,6 +72,10 @@ class UtilisateursController extends LoggedController
         $userId = $this->user->getUserId();
         $userRepository = new UserRepository();
         $error = $this->_insertControl();
+        if ($_REQUEST['user_type_id'] == '') {
+            array_push($error, 'Veuillez sélectionner un type de compte');
+        }
+
         if (empty($error)) {
             $userId = $userRepository->insert(
                 [
@@ -94,7 +97,7 @@ class UtilisateursController extends LoggedController
         $userRepository = new UserRepository();
         $userId = $_POST['user_id'];
 
-        $result = $userRepository->select(['user_id' => $userId])->result();
+        $result = $userRepository->select(['user_id' => $userId])->row();
 
         echo $this->twig->render('pages/admin/edit_user.html.twig', ['user' => $result, 'user_id' => $_POST['user_id']]);
     }
@@ -103,10 +106,18 @@ class UtilisateursController extends LoggedController
     {
         $userRepository = new UserRepository();
 
-        $userId = $this->user->getUserId();
-        $result = $userRepository->select(['user_id' => $userId])->result();
+        $errors = [];
+        $userId =$_REQUEST['user_id'];
 
-        if (empty($error)) {
+        /** @var User $user */
+        $user = $userRepository->select(['user_id' => $userId])->row();
+
+        $isMailUnique = $this->isEmailUnique($_REQUEST['email'], $userId, $user );
+        if(!$isMailUnique) {
+            array_push($errors, 'Ce mail est déjà pris');
+        }
+
+        if (empty($errors)) {
             $user = $userRepository->update(
                 [
                     'pseudo' => $_REQUEST['pseudo'],
@@ -115,11 +126,36 @@ class UtilisateursController extends LoggedController
                 ['user_id' => $_REQUEST['user_id']]
             );
             header('Location: ' . 'http://' . $_SERVER['HTTP_HOST'] . '/utilisateurs');
-        } else {
-            echo '<div class="something">' . $error[0];
+        }
+        echo $this->twig->render('pages/admin/edit_user.html.twig', ['user' => $user, 'user_id' => $userId, 'errors' => $errors]);
+    }
+
+    /**
+     * Verify that the email entered is not already used by another user
+     * @param string $mail
+     * @param int    $userId
+     * @param User   $user
+     *
+     * @return bool
+     */
+    protected function isEmailUnique(string $mail, int $userId, User $user): bool
+    {
+        $userRepository = new UserRepository();
+
+        if($mail != $user->getEmail())
+        {
+            /** @var User $userVerif */
+            $userVerif = $userRepository->select(['email' => $mail ])->result();
+            foreach ($userVerif as $u)
+            {
+                if ($u->getUserId() != $userId)
+                {
+                    return false;
+                }
+            }
         }
 
-        echo $this->twig->render('pages/createur/edit_track.html.twig');
+        return true;
     }
 
 }
